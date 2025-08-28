@@ -68,7 +68,8 @@ ar <- function(f, q, c=1, n=1000) {
     params = list(f = f, q = q, c = c, n = n),
     data = data,
     acceptance_rate = mean(y != 0),
-    expected_values_f = mean(x),
+    expected_values_f = mean(y[y != 0]),
+    variance_f = var(y[y != 0]),
     suggested_c = suggested_c
   )
 
