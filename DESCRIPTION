@@ -17,4 +17,6 @@ LazyData: true
 LinkingTo: 
     Rcpp
 Imports: 
+    Rcpp,
     stats
+RoxygenNote: 7.3.2
