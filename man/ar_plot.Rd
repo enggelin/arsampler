@@ -7,11 +7,11 @@
 ar_plot(model)
 }
 \arguments{
-\item{x}{A numeric value.}
+\item{model}{an object of class `ar`.}
 }
 \value{
-The value of `x * 2`.
+An overlay plot of the target density f(x) and proposal density q(x).
 }
 \description{
-Multiplies a number by two using a C++ back end.
+Display an overlay plot of the target density f(x) and proposal density q(x).
 }

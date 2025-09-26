@@ -1,9 +1,12 @@
-#' ar
+#' Acceptance-rejection Sampler
 #'
-#' Multiplies a number by two using a C++ back end.
+#' Perform a acceptance-rejection sampling on target density f(x) using proposal density q(x) with optional c and n.
 #'
-#' @param x A numeric value.
-#' @return The value of `x * 2`.
+#' @param f the target density, f(x).
+#' @param q the proposal density, q(x).
+#' @param c the value of c, which is usually is the maximum ratio of f(x) and q(x). Defaulted at 1.
+#' @param n the number of iteration. Defaulted at 1000.
+#' @return `ar` returns an object of class "ar". An object of class "ar" is a list containing the following components: `params`, `data`, `acceptance_rate`, `expected_values_f`, `variance_f`, `suggested_c`.
 #' @export
 
 ar <- function(f, q, c=1, n=1000) {
@@ -11,8 +14,7 @@ ar <- function(f, q, c=1, n=1000) {
   q_expr <- parse(text = q)
   x <- eval(q_expr)
 
-  # evaluate target density f(x) from string to evaluable expression
-  parent_env <- parent.frame()
+  # evaluate target density f(x) from string to valid expression using Rcpp
   f_vals <- tsamp(f, x, env = parent.frame())
 
   # return an error if the target density produces infinite or negative values
@@ -81,6 +83,6 @@ ar <- function(f, q, c=1, n=1000) {
     suggested_c = suggested_c
   )
 
-  class(result) <- "ar_result"
+  class(result) <- "ar"
   return (result)
 }

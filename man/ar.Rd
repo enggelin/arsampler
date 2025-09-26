@@ -2,16 +2,22 @@
 % Please edit documentation in R/ar.R
 \name{ar}
 \alias{ar}
-\title{ar}
+\title{Acceptance-rejection Sampler}
 \usage{
 ar(f, q, c = 1, n = 1000)
 }
 \arguments{
-\item{x}{A numeric value.}
+\item{f}{the target density, f(x).}
+
+\item{q}{the proposal density, q(x).}
+
+\item{c}{the value of c, which is usually is the maximum ratio of f(x) and q(x). Defaulted at 1.}
+
+\item{n}{the number of iteration. Defaulted at 1000.}
 }
 \value{
-The value of `x * 2`.
+`ar` returns an object of class "ar". An object of class "ar" is a list containing the following components: `params`, `data`, `acceptance_rate`, `expected_values_f`, `variance_f`, `suggested_c`.
 }
 \description{
-Multiplies a number by two using a C++ back end.
+Perform a acceptance-rejection sampling on target density f(x) using proposal density q(x) with optional c and n.
 }

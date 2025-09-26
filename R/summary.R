@@ -3,10 +3,12 @@
 #' Provide a summary for an object of class `ar`.
 #'
 #' @param model an object of class `ar`.
+#' @param ... additional arguments.
 #' @return The summary of an object of class `ar` with the following components: `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.
 #' @export
+#' @method summary ar
 
-ar_summary <- function(model) {
+summary.ar <- function(model, ...) {
   if (!inherits(model, "ar")){
     stop("Input must be an object of class \"ar\"")
   }
