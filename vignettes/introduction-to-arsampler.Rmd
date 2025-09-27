@@ -13,12 +13,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup, warning=FALSE, message=FALSE}
 library(arsampler)
 ```
-
 
 ## Introduction
 
