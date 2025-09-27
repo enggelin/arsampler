@@ -4,10 +4,10 @@
 \alias{ar_summary}
 \title{Summaries of an object of class `ar`}
 \usage{
-ar_summary(model)
+ar_summary(object)
 }
 \arguments{
-\item{model}{an object of class `ar`.}
+\item{object}{an object of class `ar`.}
 }
 \value{
 The summary of an object of class `ar` with the following components: `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.

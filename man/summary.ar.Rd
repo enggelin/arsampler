@@ -4,10 +4,10 @@
 \alias{summary.ar}
 \title{Summaries of an object of class `ar`}
 \usage{
-\method{summary}{ar}(model, ...)
+\method{summary}{ar}(object, ...)
 }
 \arguments{
-\item{model}{an object of class `ar`.}
+\item{object}{an object of class `ar`.}
 
 \item{...}{additional arguments.}
 }

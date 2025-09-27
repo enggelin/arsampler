@@ -4,10 +4,10 @@
 \alias{print.ar}
 \title{Data of an object of class `ar`}
 \usage{
-\method{print}{ar}(model, ...)
+\method{print}{ar}(x, ...)
 }
 \arguments{
-\item{model}{an object of class `ar`.}
+\item{x}{an object of class `ar`.}
 
 \item{...}{additional arguments.}
 }

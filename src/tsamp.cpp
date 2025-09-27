@@ -21,4 +21,3 @@ NumericVector tsamp(std::string expr, NumericVector x, Environment env) {
   }
   return out;
 }
-

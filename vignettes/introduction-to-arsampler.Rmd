@@ -1,0 +1,26 @@
+---
+title: "Introduction to arsampler"
+author: "Enggelin Giacinta Wongkar"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to arsampler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(arsampler)
+```
+
+
+## Introduction
+
+The main function of the package `arsampler` is `ar`. This function allows the user to 
+

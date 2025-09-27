@@ -10,6 +10,7 @@
 #' @export
 
 ar <- function(f, q, c=1, n=1000) {
+
   # sample x from the proposal distribution
   q_expr <- parse(text = q)
   x <- eval(q_expr)
@@ -60,7 +61,7 @@ ar <- function(f, q, c=1, n=1000) {
   y <- ifelse(accept, x, 0)
 
   #suggested c
-  suggested_c <- ifelse(max(r[is.finite(r)])>1, max(r[is.finite(r)]), "NA")
+  suggested_c <- ifelse(max(r[is.finite(r)])> (1+1e-3), max(r[is.finite(r)]), "NA") # tolerance epsilon 1e-3 = 0.001
 
   # create data frame
   data <- data.frame(
