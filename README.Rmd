@@ -114,9 +114,7 @@ testthat::test_dir(system.file("tests", package = "arsampler"))
 The above command will test several scenarios defined by the author of this package. The unit testing comprises of several scenario which may arise in certain circumstances and the expected output from it. Inside the directory `tests/testthat/`, there is one test file names `test-ar.R`. The content of the file is as follows:
 
 ``` r
-context("The test of the output for the exact same pair of target and proposal densities.")
-
-test_that("Output for the exact same pair of target and proposal densities are as expected", {
+test_that("The test of the output for the exact same pair of target and proposal densities.", {
 
   ## initialise variables for testing
   # pair of standard normal distributions
