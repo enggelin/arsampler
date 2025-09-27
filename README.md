@@ -11,9 +11,9 @@
 
 `arsampler` is a package to help perform the acceptance-rejection
 sampling without having to code the entire algorithm itself. The current
-version of this package can only accept a proposal densities from
-pre-defined templates while the user can define their own target
-densities (see examples below).
+version of this package (Version 0.1.0) can only accept a proposal
+densities from pre-defined templates while the user can define their own
+target densities (see examples below).
 
 ## Installation
 
@@ -36,16 +36,25 @@ library(arsampler)
 
 ## Get started with arsampler
 
-Read the short introductory vignette to get you started with `arsampler`
-and have a look at the examples below.
+Read the short introductory vignette to get you started with
+`arsampler`. To look at examples, follow the section **Example** right
+after this section.
 
 ``` r
 # Read the short vignette
-#vignette("introduction-to-arsampler)
-
-# Reproduce a simple example
-#example(arsampler)
+vignette("introduction-to-arsampler")
+#> Warning: vignette 'introduction-to-arsampler' not found
 ```
+
+The vignette above basically explains that the package, in its current
+version, has 3 functions: `ar()`, which is the main function and outputs
+an object of class `ar`; `ar_summary()`, which receives input of an
+object of class `ar` and outputs the summary of the fitted densities;
+and `ar_plot()`, which receives input of an object of class `ar` and
+outputs the overlay plot of both the target and proposal densities
+(corrected with `c`, if defined) in a single plot. On this version, only
+two functions are ready to be used and tested, i.e. `ar()` and
+`ar_summary()`.
 
 ## Example
 
@@ -60,7 +69,9 @@ q_norm <- "rnorm(n, 0, 1)"
 
 # Run the main function ar()
 example_norm <- ar(f_norm, q_norm, c=1, n=10)
+```
 
+``` r
 # Print the raw values of the fitted densities
 example_norm
 #> Data of  x :
@@ -80,45 +91,47 @@ example_norm
 #> 
 #> 
 #> $data
-#>    index           x         f         q           y r          u
-#> 1      1 -0.12596041 0.3957900 0.3957900 -0.12596041 1 0.16511915
-#> 2      2  0.65087736 0.3227881 0.3227881  0.65087736 1 0.81443629
-#> 3      3  1.05144770 0.2295327 0.2295327  1.05144770 1 0.73004210
-#> 4      4  0.19838225 0.3911687 0.3911687  0.19838225 1 0.06482781
-#> 5      5  0.03761018 0.3986602 0.3986602  0.03761018 1 0.99893473
-#> 6      6 -0.13493207 0.3953271 0.3953271 -0.13493207 1 0.23551828
-#> 7      7  1.04458511 0.2311895 0.2311895  1.04458511 1 0.49856997
-#> 8      8 -0.06864086 0.3980036 0.3980036 -0.06864086 1 0.63826861
-#> 9      9  0.47099088 0.3570588 0.3570588  0.47099088 1 0.95916749
-#> 10    10  1.44675186 0.1400881 0.1400881  1.44675186 1 0.41172633
+#>    index          x         f         q          y r          u
+#> 1      1  1.2404536 0.1848333 0.1848333  1.2404536 1 0.73309169
+#> 2      2 -0.4185124 0.3654906 0.3654906 -0.4185124 1 0.56351772
+#> 3      3  0.2933581 0.3821401 0.3821401  0.2933581 1 0.50146710
+#> 4      4  0.4231852 0.3647725 0.3647725  0.4231852 1 0.40874634
+#> 5      5 -0.8436283 0.2794888 0.2794888 -0.8436283 1 0.38144071
+#> 6      6  0.3883344 0.3699674 0.3699674  0.3883344 1 0.68724225
+#> 7      7 -1.1914843 0.1961735 0.1961735 -1.1914843 1 0.76067410
+#> 8      8 -0.2123095 0.3900516 0.3900516 -0.2123095 1 0.29642444
+#> 9      9  0.8404952 0.2802272 0.2802272  0.8404952 1 0.09067685
+#> 10    10  0.8951689 0.2672416 0.2672416  0.8951689 1 0.96221506
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.4571112
+#> [1] 0.1415061
 #> 
 #> $variance_f
-#> [1] 0.3250348
+#> [1] 0.6237516
 #> 
 #> $suggested_c
 #> [1] "NA"
+```
 
+``` r
 # Provide a summary of the fitted densities
 ar_summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4571 
-#>      Empirical variance of target distribution:  0.325 
+#>      Empirical expected value of target distribution:  0.1415 
+#>      Empirical variance of target distribution:  0.6238 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
 The above output can also be achieved by using the commands `print()`
 and `summary()`, which is an S3 object-oriented method in R. Those
-commands are override if the user passes an object of class `ar`, which
-is the object class of the output from the function `ar()`.
+commands are overridden if the user passes an object of class `ar`,
+which is the object class of the output from the function `ar()`.
 
 ``` r
 # Print the raw values of the fitted densities using S3 method print()
@@ -140,37 +153,39 @@ print(example_norm)
 #> 
 #> 
 #> $data
-#>    index           x         f         q           y r          u
-#> 1      1 -0.12596041 0.3957900 0.3957900 -0.12596041 1 0.16511915
-#> 2      2  0.65087736 0.3227881 0.3227881  0.65087736 1 0.81443629
-#> 3      3  1.05144770 0.2295327 0.2295327  1.05144770 1 0.73004210
-#> 4      4  0.19838225 0.3911687 0.3911687  0.19838225 1 0.06482781
-#> 5      5  0.03761018 0.3986602 0.3986602  0.03761018 1 0.99893473
-#> 6      6 -0.13493207 0.3953271 0.3953271 -0.13493207 1 0.23551828
-#> 7      7  1.04458511 0.2311895 0.2311895  1.04458511 1 0.49856997
-#> 8      8 -0.06864086 0.3980036 0.3980036 -0.06864086 1 0.63826861
-#> 9      9  0.47099088 0.3570588 0.3570588  0.47099088 1 0.95916749
-#> 10    10  1.44675186 0.1400881 0.1400881  1.44675186 1 0.41172633
+#>    index          x         f         q          y r          u
+#> 1      1  1.2404536 0.1848333 0.1848333  1.2404536 1 0.73309169
+#> 2      2 -0.4185124 0.3654906 0.3654906 -0.4185124 1 0.56351772
+#> 3      3  0.2933581 0.3821401 0.3821401  0.2933581 1 0.50146710
+#> 4      4  0.4231852 0.3647725 0.3647725  0.4231852 1 0.40874634
+#> 5      5 -0.8436283 0.2794888 0.2794888 -0.8436283 1 0.38144071
+#> 6      6  0.3883344 0.3699674 0.3699674  0.3883344 1 0.68724225
+#> 7      7 -1.1914843 0.1961735 0.1961735 -1.1914843 1 0.76067410
+#> 8      8 -0.2123095 0.3900516 0.3900516 -0.2123095 1 0.29642444
+#> 9      9  0.8404952 0.2802272 0.2802272  0.8404952 1 0.09067685
+#> 10    10  0.8951689 0.2672416 0.2672416  0.8951689 1 0.96221506
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.4571112
+#> [1] 0.1415061
 #> 
 #> $variance_f
-#> [1] 0.3250348
+#> [1] 0.6237516
 #> 
 #> $suggested_c
 #> [1] "NA"
+```
 
+``` r
 # Provide a summary of the fitted densities using S3 method summary()
 summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4571 
-#>      Empirical variance of target distribution:  0.325 
+#>      Empirical expected value of target distribution:  0.1415 
+#>      Empirical variance of target distribution:  0.6238 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -198,10 +213,73 @@ library(testthat)
 testthat::test_dir(system.file("tests", package = "arsampler"))
 ```
 
-The above command will test several scenarios of the input from the
-user, which will be described below:
+The above command will test several scenarios defined by the author of
+this package. The unit testing comprises of several scenario which may
+arise in certain circumstances and the expected output from it. Inside
+the directory `tests/testthat/`, there is one test file names
+`test-ar.R`. The content of the file is as follows:
 
-…
+``` r
+context("The test of the output for the exact same pair of target and proposal densities.")
+
+test_that("Output for the exact same pair of target and proposal densities are as expected", {
+
+  ## initialise variables for testing
+  # pair of standard normal distributions
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # pair of uniform distribution
+  f_unif <- "1"
+  q_unif <- "runif(n, 0, 1)"
+
+  # pair of gamma distribution, alpha=3, beta=2
+  f_gamma <- "((2^3)/(gamma(3)))*x^(3-1)*exp(-2*x)"
+  q_gamma <- "rgamma(n, 3, 2)"
+
+  # pair of beta distribution, alpha=3, beta=2
+  f_beta <- "((gamma(3+2))/gamma(3)*gamma(2))*x^(3-1)*(1-x)^(2-1)"
+  q_beta <- "rbeta(n, 3, 2)"
+
+  # pair of exp distribution, lambda=3
+  f_exp <- "3*exp(-3*x)"
+  q_exp <- "rexp(n, 3)"
+
+  # expect silent (correct input)
+  expect_silent(ar(f_norm, q_norm, c=1, n=1000))
+  expect_silent(ar(f_unif, q_unif, c=1, n=1000))
+  expect_silent(ar(f_gamma, q_gamma, c=1, n=1000))
+  expect_silent(ar(f_beta, q_beta, c=1, n=1000))
+  expect_silent(ar(f_exp, q_exp, c=1, n=1000))
+
+  # expect equal: acceptance rate = 1
+  expect_equal(ar(f_norm, q_norm, c=1, n=1000)$acceptance_rate, 1)
+  expect_equal(ar(f_unif, q_unif, c=1, n=1000)$acceptance_rate, 1)
+  expect_equal(ar(f_gamma, q_gamma, c=1, n=1000)$acceptance_rate, 1)
+  expect_equal(ar(f_beta, q_beta, c=1, n=1000)$acceptance_rate, 1)
+  expect_equal(ar(f_exp, q_exp, c=1, n=1000)$acceptance_rate, 1)
+
+  # expect equal: rounded mean from standard distributions; longer run for convergence
+  expect_equal(abs(round(ar(f_norm, q_norm, c=1, n=10000)$expected_values_f, 1)), 0) # need to put abs() on the standard normal distribution because the possible value may range from negative around zero to positive around zero.
+  expect_equal(round(ar(f_unif, q_unif, c=1, n=10000)$expected_values_f, 1), 0.5)
+  expect_equal(round(ar(f_gamma, q_gamma, c=1, n=10000)$expected_values_f, 1), 1.5)
+  expect_equal(round(ar(f_beta, q_beta, c=1, n=10000)$expected_values_f, 1), 0.6)
+  expect_equal(round(ar(f_exp, q_exp, c=1, n=10000)$expected_values_f, 1), 0.3)
+
+  # expect match: suggested c = NA
+  expect_match(ar(f_norm, q_norm, c=1, n=1000)$suggested_c, "NA")
+  expect_match(ar(f_unif, q_unif, c=1, n=1000)$suggested_c, "NA")
+  expect_match(ar(f_gamma, q_gamma, c=1, n=1000)$suggested_c, "NA")
+  expect_match(ar(f_beta, q_beta, c=1, n=1000)$suggested_c, "NA")
+  expect_match(ar(f_exp, q_exp, c=1, n=1000)$suggested_c, "NA")
+})
+```
+
+If the test runs smoothly, the console with return `20` passed test
+item.
+
+The content tested by the test file can be done by the user using the
+instruction below.
 
 ## Test plan: user input
 
@@ -213,11 +291,12 @@ You will notice that in the above example, the expected mean and
 variance are rather nonsense, as we only run the sampler for a few
 iterations. To be able to provide a rather accurate results, we need to
 run the sampler long enough. An iteration of minimum of `n=1000` should
-provide suffice, although for some densities it needs to be run long
-enough (more about that later). In this test plan, we will try several
-scenarios of combination pair of target-proposal densities.
+provide suffice (this is also the default value for `n`), although for
+some densities it needs to be run long enough (more about that later).
+In this test plan, we will try several scenarios of combination pair of
+target-proposal densities.
 
-### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution: $`\approx`$ its mean
+### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution $`\approx`$ its mean
 
 The package has several pre-defined probability densities for user to
 use. They are: `normal`, `uniform`, `gamma`, `beta`, and `exponential`.
@@ -237,8 +316,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.033 
-#>      Empirical variance of target distribution:  0.9916 
+#>      Empirical expected value of target distribution:  0.0071 
+#>      Empirical variance of target distribution:  0.9093 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -253,8 +332,8 @@ summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4988 
-#>      Empirical variance of target distribution:  0.0869 
+#>      Empirical expected value of target distribution:  0.4929 
+#>      Empirical variance of target distribution:  0.0859 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -269,8 +348,8 @@ summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.5746 
-#>      Empirical variance of target distribution:  0.7996 
+#>      Empirical expected value of target distribution:  1.5456 
+#>      Empirical variance of target distribution:  0.7084 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -285,8 +364,8 @@ summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.5982 
-#>      Empirical variance of target distribution:  0.0384 
+#>      Empirical expected value of target distribution:  0.5968 
+#>      Empirical variance of target distribution:  0.0408 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -301,27 +380,26 @@ summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3189 
-#>      Empirical variance of target distribution:  0.1063 
+#>      Empirical expected value of target distribution:  0.3242 
+#>      Empirical variance of target distribution:  0.1125 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
 Notice that for the above examples, we do not use the command `print()`,
-as we do not want to clutter the **Example** section. Another S3 method,
-`head()`, will be implemented in a later version to accommodate this
-shortcoming.
+as we do not want to clutter this section. Another S3 method, `head()`,
+will be implemented in a later version to accommodate this shortcoming.
 
 If the examples run correctly, you will notice that each printed summary
 gives `Acceptance rate: 1`, `Suggested minimum c: NA`, and
-`Empirical expected value of target distribution: $\approx$ its mean`.
+`Empirical expected value of target distribution: (approximately its mean)`.
 This means that the proposal densities perfectly match their own target
 densities, as they are the exact same distributions with the exact same
 parameters. `Acceptance rate: 1` means all the proposed values are
 accepted as coming from the corresponding target distribution,
 `Suggested minimum c: NA` means that the proposal distribution envelopes
 the target distribution entirely with the given value of `c`, and
-`Empirical expected value of target distribution: $\approx$ its mean`
+`Empirical expected value of target distribution: (approximately its mean)`
 means that the accepted `x` values from the proposal distributions are
 able to approximate the mean of the target distribution. You can input
 your own parameters and see if the expected value match with the
@@ -363,9 +441,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergen
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.5067 
-#>      Empirical expected value of target distribution:  -0.0018 
-#>      Empirical variance of target distribution:  1.5952 
+#>      Acceptance rate:  0.513 
+#>      Empirical expected value of target distribution:  -0.0301 
+#>      Empirical variance of target distribution:  1.54 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -385,16 +463,16 @@ example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c 
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.3092 
-#>      Empirical expected value of target distribution:  0.0114 
-#>      Empirical variance of target distribution:  1.0025 
+#>      Acceptance rate:  0.3171 
+#>      Empirical expected value of target distribution:  0.0112 
+#>      Empirical variance of target distribution:  0.9973 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
-The suggested minimum c is now NA, which means the proposal density now
-envelopes the target density fully, and the expected value and variance
-are now valid. ($`\hat{E(X)} \approx \mu`$ and
+The suggested minimum `c` is now `NA`, which means the proposal density
+now envelopes the target density fully, and the expected value and
+variance are now valid. ($`\hat{E(X)} \approx \mu`$ and
 $`\hat{Var(X)} \approx \sigma^2`$).
 
 You can try using different combinations of target-density pair for this

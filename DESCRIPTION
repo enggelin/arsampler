@@ -1,6 +1,6 @@
 Package: arsampler
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Perform Acceptance-Rejection Sampling
 Version: 0.1.0
 Authors@R: c(
     person(
@@ -9,8 +9,8 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: This is a package to help perform the acceptance-rejection sampling without having to code the entire algorithm itself.
+    The current version of this package can only accept a proposal densities from pre-defined templates while the user can define their own target densities.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

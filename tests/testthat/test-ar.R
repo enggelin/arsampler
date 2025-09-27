@@ -1,4 +1,4 @@
-test_that("Testing the pair of same target and proposal densities", {
+test_that("The test of the output for the exact same pair of target and proposal densities.", {
 
   ## initialise variables for testing
   # pair of standard normal distributions

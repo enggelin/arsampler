@@ -7,17 +7,35 @@
 ar(f, q, c = 1, n = 1000)
 }
 \arguments{
-\item{f}{the target density, f(x).}
+\item{f}{the target density, \eqn{f(x)}.}
 
-\item{q}{the proposal density, q(x).}
+\item{q}{the proposal density, \eqn{q(x)}.}
 
-\item{c}{the value of c, which is usually is the maximum ratio of f(x) and q(x). Defaulted at 1.}
+\item{c}{the value of \code{c}, which is usually is the maximum ratio of \eqn{f(x)} and \eqn{q(x)}. Defaulted at 1.}
 
 \item{n}{the number of iteration. Defaulted at 1000.}
 }
 \value{
-`ar` returns an object of class "ar". An object of class "ar" is a list containing the following components: `params`, `data`, `acceptance_rate`, `expected_values_f`, `variance_f`, `suggested_c`.
+\describe{\code{ar} returns an object of class "ar". An object of class "ar" is a list containing the following components:
+  \item{params}{A list containing the input arguments \code{f}, \code{q}, \code{c}, and \code{n}.}
+  \item{data}{A data frame containing the outputs: \code{index}, \code{x}, \code{f}, \code{q}, \code{y}, \code{r}, \code{u}}
+  \item{acceptance_rate}{Ratio of accepted \code{x}.}
+  \item{expected_values_f}{Sample mean of accepted values.}
+  \item{variance_f}{Sample variance of accepted values.}
+  \item{suggested_c}{Suggested \code{c} estimated from \eqn{\max f(x)/q(x)}.}
+}
 }
 \description{
-Perform a acceptance-rejection sampling on target density f(x) using proposal density q(x) with optional c and n.
+Perform an acceptance-rejection sampling on target density \eqn{f(x)} using proposal density \eqn{q(x)} with optional arguments \code{c} and \code{n}.
+}
+\examples{
+# pair of standard normal distributions
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_norm <- "rnorm(n, 0, 1)"
+example_norm <- ar(f_norm, q_norm, c=1, n=1000)
+example_norm$data
+
+}
+\seealso{
+[stats::rnorm()]
 }
