@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 library(arsampler)
 ```
 
 
 ## Introduction
 
-The main function of the package `arsampler` is `ar`. This function allows the user to 
+The main function of the package `arsampler` is `ar`.
 

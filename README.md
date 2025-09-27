@@ -43,7 +43,6 @@ after this section.
 ``` r
 # Read the short vignette
 vignette("introduction-to-arsampler")
-#> Warning: vignette 'introduction-to-arsampler' not found
 ```
 
 The vignette above basically explains that the package, in its current
@@ -91,26 +90,26 @@ example_norm
 #> 
 #> 
 #> $data
-#>    index           x          f          q           y r          u
-#> 1      1  0.54797825 0.34332471 0.34332471  0.54797825 1 0.07642655
-#> 2      2 -0.78786012 0.29249716 0.29249716 -0.78786012 1 0.55703015
-#> 3      3  2.33718367 0.02598717 0.02598717  2.33718367 1 0.70677809
-#> 4      4  0.05698444 0.39829508 0.39829508  0.05698444 1 0.54360351
-#> 5      5 -0.78590813 0.29294678 0.29294678 -0.78590813 1 0.93704619
-#> 6      6 -1.08638313 0.22111935 0.22111935 -1.08638313 1 0.86568470
-#> 7      7  0.21933197 0.38946091 0.38946091  0.21933197 1 0.31572807
-#> 8      8 -0.16031027 0.39384879 0.39384879 -0.16031027 1 0.70538483
-#> 9      9 -1.21867368 0.18984994 0.18984994 -1.21867368 1 0.30825548
-#> 10    10  1.09171197 0.21983983 0.21983983  1.09171197 1 0.59044489
+#>    index          x         f         q          y r          u
+#> 1      1  1.0652773 0.2261976 0.2261976  1.0652773 1 0.11078524
+#> 2      2  0.6530634 0.3223284 0.3223284  0.6530634 1 0.02555815
+#> 3      3 -0.3761471 0.3716949 0.3716949 -0.3761471 1 0.81969420
+#> 4      4  0.8929756 0.2677662 0.2677662  0.8929756 1 0.53905061
+#> 5      5 -0.7980610 0.2901407 0.2901407 -0.7980610 1 0.54645962
+#> 6      6  0.2452214 0.3871259 0.3871259  0.2452214 1 0.37302296
+#> 7      7 -0.7105616 0.3099366 0.3099366 -0.7105616 1 0.69177583
+#> 8      8 -1.4683990 0.1357370 0.1357370 -1.4683990 1 0.81329231
+#> 9      9 -0.8382294 0.2807606 0.2807606 -0.8382294 1 0.50996820
+#> 10    10  0.4049104 0.3675431 0.3675431  0.4049104 1 0.33350773
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.0214055
+#> [1] -0.092995
 #> 
 #> $variance_f
-#> [1] 1.214531
+#> [1] 0.7376031
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -122,8 +121,8 @@ ar_summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0214 
-#>      Empirical variance of target distribution:  1.2145 
+#>      Empirical expected value of target distribution:  -0.093 
+#>      Empirical variance of target distribution:  0.7376 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -153,26 +152,26 @@ print(example_norm)
 #> 
 #> 
 #> $data
-#>    index           x          f          q           y r          u
-#> 1      1  0.54797825 0.34332471 0.34332471  0.54797825 1 0.07642655
-#> 2      2 -0.78786012 0.29249716 0.29249716 -0.78786012 1 0.55703015
-#> 3      3  2.33718367 0.02598717 0.02598717  2.33718367 1 0.70677809
-#> 4      4  0.05698444 0.39829508 0.39829508  0.05698444 1 0.54360351
-#> 5      5 -0.78590813 0.29294678 0.29294678 -0.78590813 1 0.93704619
-#> 6      6 -1.08638313 0.22111935 0.22111935 -1.08638313 1 0.86568470
-#> 7      7  0.21933197 0.38946091 0.38946091  0.21933197 1 0.31572807
-#> 8      8 -0.16031027 0.39384879 0.39384879 -0.16031027 1 0.70538483
-#> 9      9 -1.21867368 0.18984994 0.18984994 -1.21867368 1 0.30825548
-#> 10    10  1.09171197 0.21983983 0.21983983  1.09171197 1 0.59044489
+#>    index          x         f         q          y r          u
+#> 1      1  1.0652773 0.2261976 0.2261976  1.0652773 1 0.11078524
+#> 2      2  0.6530634 0.3223284 0.3223284  0.6530634 1 0.02555815
+#> 3      3 -0.3761471 0.3716949 0.3716949 -0.3761471 1 0.81969420
+#> 4      4  0.8929756 0.2677662 0.2677662  0.8929756 1 0.53905061
+#> 5      5 -0.7980610 0.2901407 0.2901407 -0.7980610 1 0.54645962
+#> 6      6  0.2452214 0.3871259 0.3871259  0.2452214 1 0.37302296
+#> 7      7 -0.7105616 0.3099366 0.3099366 -0.7105616 1 0.69177583
+#> 8      8 -1.4683990 0.1357370 0.1357370 -1.4683990 1 0.81329231
+#> 9      9 -0.8382294 0.2807606 0.2807606 -0.8382294 1 0.50996820
+#> 10    10  0.4049104 0.3675431 0.3675431  0.4049104 1 0.33350773
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.0214055
+#> [1] -0.092995
 #> 
 #> $variance_f
-#> [1] 1.214531
+#> [1] 0.7376031
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -184,8 +183,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0214 
-#>      Empirical variance of target distribution:  1.2145 
+#>      Empirical expected value of target distribution:  -0.093 
+#>      Empirical variance of target distribution:  0.7376 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -314,8 +313,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0443 
-#>      Empirical variance of target distribution:  0.9878 
+#>      Empirical expected value of target distribution:  0.0161 
+#>      Empirical variance of target distribution:  0.9989 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -330,8 +329,8 @@ summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.5019 
-#>      Empirical variance of target distribution:  0.0827 
+#>      Empirical expected value of target distribution:  0.4981 
+#>      Empirical variance of target distribution:  0.0831 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -346,8 +345,8 @@ summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.521 
-#>      Empirical variance of target distribution:  0.8099 
+#>      Empirical expected value of target distribution:  1.5051 
+#>      Empirical variance of target distribution:  0.742 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -362,8 +361,8 @@ summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.6035 
-#>      Empirical variance of target distribution:  0.0406 
+#>      Empirical expected value of target distribution:  0.6041 
+#>      Empirical variance of target distribution:  0.0384 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -378,8 +377,8 @@ summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3355 
-#>      Empirical variance of target distribution:  0.1068 
+#>      Empirical expected value of target distribution:  0.3638 
+#>      Empirical variance of target distribution:  0.1463 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -439,9 +438,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergen
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.5043 
-#>      Empirical expected value of target distribution:  0.0055 
-#>      Empirical variance of target distribution:  1.5904 
+#>      Acceptance rate:  0.5074 
+#>      Empirical expected value of target distribution:  -0.0255 
+#>      Empirical variance of target distribution:  1.5868 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -461,9 +460,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c 
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.3152 
-#>      Empirical expected value of target distribution:  0.0024 
-#>      Empirical variance of target distribution:  0.9641 
+#>      Acceptance rate:  0.3169 
+#>      Empirical expected value of target distribution:  0.0063 
+#>      Empirical variance of target distribution:  0.9717 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```

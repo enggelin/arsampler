@@ -46,7 +46,7 @@ library(arsampler)
 
 Read the short introductory vignette to get you started with `arsampler`. To look at examples, follow the section **Example** right after this section.
 
-```{r getstarted}
+```{r getstarted, warning=FALSE}
 # Read the short vignette
 vignette("introduction-to-arsampler")
 ```
