@@ -18,5 +18,128 @@ library(arsampler)
 
 ## Introduction
 
-The main function of the package `arsampler` is `ar`.
+Two main classes of analytic problems that arise in statistical inference are optimisation problems (e.g. maximum likelihood estimation) and integration problem (e.g. calculating expectations). For the latter, it is not always possible to obtain analytical solutions in such cases and we are often led to consider numerical solutions.
 
+The Monte Carlo techniques are particularly useful in scenarios where it is of interest to perform calculations that involve a probability distribution for which closed-form calculations cannot be carried out due to the algebraic complexity of the problem. Monte Carlo methods invert the usual problem of statistics; rather than estimating random quantities in a deterministic manner, random quantities are employed to provide estimates of deterministic quantities.
+
+Therefore, using these techniques, it is possible to characterise these complex distributions and calculate expectations under them. Several sampling methods are used to perform simulations to obtain the numerical solutions for which it is then possible to incorporate the Monte Carlo algorithms; one such sampling method is Rejection sampling.
+
+Rejection sampling works by repeatedly simulating random variables from a wrong probability density and then rejecting them with a probability that depends on the ratio of the right density to the wrong density, until an acceptable value is obtained. These right density and wrong density are also called target density and proposal density, respectively. Several advantages of this procedure include requiring less algebraic properties compared to the inverse-transformation sampling method and no normalisation constant of the target nor that of the proposal distributions are needed. However, to obtain a good approximation of the properties of the target density, it is important to choose an efficient proposal density.
+
+Several considerations of a good proposal density are: easy to sample from; compatible supports with the target density; a constant c that is equal to or larger than the ratio of the target and proposal distributions; and close in form to the target distribution. Although less efficient than importance sampling method, rejection sampling provides a simpler alternative given the choice of proposal distribution is a good match for the target and the choice of the constant c envelopes the target distribution effectively.
+
+Package `arsampler` provides a hassle-free way to implement the acceptance-rejection sampling. Given the nature of this package, however, the user need to have a certain knowledge about statistics, especially about Monte Carlo integration and random number properties. Therefore, the intended main users for this package are researchers or students who want to experiment and test several distributions they have in hand and see how they match, without the need to code everything from scratch. All the user really need to know beforehand are the pdf form of the target distribution and the parameters of their proposal distribution, and the package will take care of the rest. There are several limitations of this package in its current version (Version 0.1.0), however, which will be explained in the next section.
+
+
+## Limitations
+
+Considering the package is developed on a shorter time commitment (3 months more or less), it can not include a lot of things that may potentially make this package robust and powerful. Some of the limitations of this package in the current stage are:
+
+  * The package only accomodates continuous distribution, denoted by a *pdf* (probability density function) rather than *pmf* (probability mass function) of a discrete distribution. This ensures that the sampling is done in a correct way; as *pmf* gives a step function when plotted, it does not make sense to draw samples from that. An area function of a *pdf*, however, makes it easier to draw samples from both the target and proposal densities. Therefore, the templates for the proposal distributions, in the current version, are limited to: *normal*, *uniform*, *beta*, *gamma*, and *exponential*. This list may potentially be expanded in later versions. The usages of this proposal distributions are explained in the section **Usage**.
+  
+  * The input for the target or proposal distribution can not contain any kind of parameters except the constants or functions known to R. For example, for a standard normal distribution ($X \sim N(0,1)$), rather than defining the string for the target distribution as `"(1/sqrt(2*pi*sigma^2))*exp((-(x-mu)^2)/(2*sigma^2))"`, it has to be declared as `"(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"`. That is, any kind of parameters has to be converted into its numerical form first. Notice that we left off the constant `pi` as it is, because it is a constant known to R. Other built-in constants or functions in R are: `besselI()` (and its other variations, `besselJ()`, `besselY()`, `besselK()`), `gamma()` (and its families), `beta()`, `choose()` (and other variations of combinatorics), and `sinh` (and its other variations of hyperbolic). Meanwhile, for the proposal distribution, since it is taken from templates, it needs to be written as (let's say, it is a standard normal distribution again) `"rnorm(n, 0, 1)"`. Notice that we also left the `n` since it will be declared in the list of arguments.
+  
+It is possible that, given enough time, several improvement will be made for this package to overcome those limitations and potentially make this package more robust for everyday use.
+
+
+## Usage
+
+### Functions
+
+The usage of the functions in this package is relatively straightforward. There are 3 functions currently available in this version: `ar()` (the main function), `ar_summary()`, and `ar_plot()`. The explanation for each functions are described below.
+
+  * `ar()` accepts, at max, 4 arguments, with 2 mandatory and 2 optional. The arguments are:
+    *  `f`: the target density, defined as string. The example usage for a standard normal distribution is: `"(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"`. This is a mandatory argument.
+    *  `q`: the proposal density, defined as string. It is taken from a list of templates, therefore the format is restricted to R format. The list of proposal densities and their formats are: `rnorm(n, mu, sigma)` for normal distribution with `mu` and `sigma` need to be converted into numerics; `runif(n, a, b)` for uniform distribution with `a` and `b` need to be converted into numerics; `rbeta(n, alpha, beta)` for beta distribution with `alpha` and `beta` need to be converted into numerics; `rgamma(n, alpha, beta)` for gamma distribution with `alpha` and `beta` need to be converted into numerics; and `rexp(n, lambda)` for exponential distribution with `lambda` needs to be converted into numeric. We can leave off `n` as it is, as it will take the value of `n` we declare in the same line of arguments. Replacing `n` with numeric will cause the package to treat the numeric value as the true `n` value which will influence the number of iterations. This is a mandatory argument.
+    *  `c`: the value of `c`, which is the constant that is used to scale the shape of `q(x)`, if it does not envelope the shape of `f(x)` fully. It is defaulted at 1, and the user can specify the value of `c` if they wish. This is an optional argument as it has a default value.
+    * `n`: the number of iterations. Theoretically, the longer the iteration, the better it is, as the expected value of `f(x)` will converge to the true mean (central limit theorem), although longer iteration will add to the computational burden of the system. Defaulted at `1000`, which is deemed long enough for an iteration. This is an optional argument as it has a default value.
+
+    This function outputs an object of class `ar`, which then can be passed to other functions in this package defined below.
+
+  * `ar_summary()` accepts one mandatory argument, which is an object of class `ar`, the output from the function `ar()`. It returns an summary of the fitted densities, which will be explained in the next section **Interpreting the output**. The functionality of this command can also be implemented using the command `summary()`, which, using its S3 object-oriented method, enables it to be modified based on the object we pass through it. Both of these functions return the same summaries of the object `ar`.
+  
+  * `ar_plot()` accepts one mandatory argument, which is an object of the class `ar` as the previous function. This command returns an overlay for both the target and proposal densities plots in a single graph. In the current version, this function is still on the early stage of development and has not been tested, therefore the implementation of this function needs to be done in a careful way.
+
+### Example
+
+This is a basic example of the usage of `arsampler` package:
+
+```{r, warning=FALSE, message=FALSE}
+# Target density: Normal(0,1); Proposal density: Uniform(-4,4)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4,4)"
+
+# Run the main function ar()
+example_norm_unif <- ar(f_norm, q_unif, c=1, n=10)
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Print the raw values of the fitted densities
+example_norm_unif
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Provide a summary of the fitted densities
+ar_summary(example_norm_unif)
+```
+
+The output above can also be achieved by using the commands `print()` and `summary()`, which is an S3 object-oriented method in R. Those commands are overridden if the user passes an object of class `ar`, which is the object class of the output from the function `ar()`.
+
+```{r, warning=FALSE, message=FALSE}
+# Print the raw values of the fitted densities using S3 method print()
+print(example_norm_unif)
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Provide a summary of the fitted densities using S3 method summary()
+summary(example_norm_unif)
+```
+
+For convenience purpose, the examples above was only run for 10 iterations, therefore the output has to be interpreted in care, because a short iteration will not be enough to produce a trustworthy output.
+
+## Interpreting the output
+
+For this section, we will run the same example as in the previous section, except this time we will run the iteration for 10000 times.
+
+```{r, warning=FALSE, message=FALSE}
+# pair of standard normal density (f) and uniform density (q) with parameters (-4, 4)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4, 4)"
+
+example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergence
+summary(example_norm_unif)
+```
+
+The acceptance rate shows the number of draws (`x`) accepted from the proposal distribution `q(x)`. Since we only set the constant to be 1, the shape of $X \sim U(-4,4)$ does not fully envelope the shape of `f(x)`. Also, the value of expected and variance do not converge to the true value of mean and variance of `f(x)`, since we are drawing from an *incorrect* distribution. The suggested minimum c shows the suggested value of `c` we need to apply in order for the proposal distribution to fully envelope the target distribution. We will make the changes in the next run.
+
+```{r, warning=FALSE, message=FALSE}
+# pair of standard normal density (f) and uniform density (q) with parameters (-4, 4)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4, 4)"
+
+example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # made changes to c
+summary(example_norm_unif)
+```
+
+As seen, the acceptance rate is now lower, but the expected values and variance have become closer to 0 and 1, respectively. The unavailable suggested minimum c shows that the proposal distribution has envelope the target distribution fully, therefore we can interpret the expected value and variance as valid.
+
+We can then plot this result using the function `ar_plot()` to look at the overlay plot of both the target and proposal distributions.
+
+```{r, warning=FALSE, message=FALSE}
+ar_plot(example_norm_unif)
+```
+
+The plot confirms our interpretation of the summaries prior that the proposal distribution has enveloped the target distribution fully.
+
+
+## References
+
+Sibanda, N., & Pledger, S. (2025). STAT 432 Computational Statistics Part 1. In P. Smith (Ed.), *STAT 432: Computational Statistics*. Victoria University of Wellington.
+
+Andrieu, C. (2004). Monte Carlo Methods for Absolute Beginners. *Machine Learning 2003, LNAI 3176*, 113–145.
+
+Johansen, A. M. (2010). *Monte Carlo Methods*. Elsevier Ltd.
+
+Clifford, P. (1994). Monte Carlo Methods. *Methods of Experimental Physics Vol. 28*. Academic Press Inc.
+
+https://www.le.ac.uk/users/dsgp1/COURSES/LEISTATS/Lecture2.pdf, accessed on 17 August 2025.

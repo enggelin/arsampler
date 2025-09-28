@@ -51,8 +51,8 @@ an object of class `ar`; `ar_summary()`, which receives input of an
 object of class `ar` and outputs the summary of the fitted densities;
 and `ar_plot()`, which receives input of an object of class `ar` and
 outputs the overlay plot of both the target and proposal densities
-(corrected with `c`, if defined) in a single plot. On this version, only
-two functions are ready to be used and tested, i.e. `ar()` and
+(scaled with `c`, if defined) in a single plot. In the current version,
+only two functions are ready to be used and tested, i.e. `ar()` and
 `ar_summary()`.
 
 ## Example
@@ -90,26 +90,26 @@ example_norm
 #> 
 #> 
 #> $data
-#>    index          x         f         q          y r          u
-#> 1      1  1.0652773 0.2261976 0.2261976  1.0652773 1 0.11078524
-#> 2      2  0.6530634 0.3223284 0.3223284  0.6530634 1 0.02555815
-#> 3      3 -0.3761471 0.3716949 0.3716949 -0.3761471 1 0.81969420
-#> 4      4  0.8929756 0.2677662 0.2677662  0.8929756 1 0.53905061
-#> 5      5 -0.7980610 0.2901407 0.2901407 -0.7980610 1 0.54645962
-#> 6      6  0.2452214 0.3871259 0.3871259  0.2452214 1 0.37302296
-#> 7      7 -0.7105616 0.3099366 0.3099366 -0.7105616 1 0.69177583
-#> 8      8 -1.4683990 0.1357370 0.1357370 -1.4683990 1 0.81329231
-#> 9      9 -0.8382294 0.2807606 0.2807606 -0.8382294 1 0.50996820
-#> 10    10  0.4049104 0.3675431 0.3675431  0.4049104 1 0.33350773
+#>    index           x         f         q           y r          u
+#> 1      1  0.59969179 0.3332862 0.3332862  0.59969179 1 0.75942252
+#> 2      2 -0.64961384 0.3230534 0.3230534 -0.64961384 1 0.42091782
+#> 3      3 -0.32469113 0.3784578 0.3784578 -0.32469113 1 0.08369942
+#> 4      4  0.05957900 0.3982349 0.3982349  0.05957900 1 0.67823303
+#> 5      5 -0.31976388 0.3790592 0.3790592 -0.31976388 1 0.62108959
+#> 6      6 -0.90235842 0.2655203 0.2655203 -0.90235842 1 0.07648013
+#> 7      7  0.16081799 0.3938167 0.3938167  0.16081799 1 0.78645812
+#> 8      8 -0.16490365 0.3935547 0.3935547 -0.16490365 1 0.48305642
+#> 9      9 -0.05505964 0.3983380 0.3983380 -0.05505964 1 0.75985761
+#> 10    10 -0.51760669 0.3489255 0.3489255 -0.51760669 1 0.61913146
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] -0.092995
+#> [1] -0.2113908
 #> 
 #> $variance_f
-#> [1] 0.7376031
+#> [1] 0.1871383
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -121,8 +121,8 @@ ar_summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  -0.093 
-#>      Empirical variance of target distribution:  0.7376 
+#>      Empirical expected value of target distribution:  -0.2114 
+#>      Empirical variance of target distribution:  0.1871 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -152,26 +152,26 @@ print(example_norm)
 #> 
 #> 
 #> $data
-#>    index          x         f         q          y r          u
-#> 1      1  1.0652773 0.2261976 0.2261976  1.0652773 1 0.11078524
-#> 2      2  0.6530634 0.3223284 0.3223284  0.6530634 1 0.02555815
-#> 3      3 -0.3761471 0.3716949 0.3716949 -0.3761471 1 0.81969420
-#> 4      4  0.8929756 0.2677662 0.2677662  0.8929756 1 0.53905061
-#> 5      5 -0.7980610 0.2901407 0.2901407 -0.7980610 1 0.54645962
-#> 6      6  0.2452214 0.3871259 0.3871259  0.2452214 1 0.37302296
-#> 7      7 -0.7105616 0.3099366 0.3099366 -0.7105616 1 0.69177583
-#> 8      8 -1.4683990 0.1357370 0.1357370 -1.4683990 1 0.81329231
-#> 9      9 -0.8382294 0.2807606 0.2807606 -0.8382294 1 0.50996820
-#> 10    10  0.4049104 0.3675431 0.3675431  0.4049104 1 0.33350773
+#>    index           x         f         q           y r          u
+#> 1      1  0.59969179 0.3332862 0.3332862  0.59969179 1 0.75942252
+#> 2      2 -0.64961384 0.3230534 0.3230534 -0.64961384 1 0.42091782
+#> 3      3 -0.32469113 0.3784578 0.3784578 -0.32469113 1 0.08369942
+#> 4      4  0.05957900 0.3982349 0.3982349  0.05957900 1 0.67823303
+#> 5      5 -0.31976388 0.3790592 0.3790592 -0.31976388 1 0.62108959
+#> 6      6 -0.90235842 0.2655203 0.2655203 -0.90235842 1 0.07648013
+#> 7      7  0.16081799 0.3938167 0.3938167  0.16081799 1 0.78645812
+#> 8      8 -0.16490365 0.3935547 0.3935547 -0.16490365 1 0.48305642
+#> 9      9 -0.05505964 0.3983380 0.3983380 -0.05505964 1 0.75985761
+#> 10    10 -0.51760669 0.3489255 0.3489255 -0.51760669 1 0.61913146
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] -0.092995
+#> [1] -0.2113908
 #> 
 #> $variance_f
-#> [1] 0.7376031
+#> [1] 0.1871383
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -183,8 +183,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  -0.093 
-#>      Empirical variance of target distribution:  0.7376 
+#>      Empirical expected value of target distribution:  -0.2114 
+#>      Empirical variance of target distribution:  0.1871 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -215,10 +215,13 @@ testthat::test_dir(system.file("tests", package = "arsampler"))
 The above command will test several scenarios defined by the author of
 this package. The unit testing comprises of several scenario which may
 arise in certain circumstances and the expected output from it. Inside
-the directory `tests/testthat/`, there is one test file names
-`test-ar.R`. The content of the file is as follows:
+the directory `tests/testthat/`, there are two test files named
+`test-ar.R` and `test-ar_summary.R`. The contents of the files and the
+context of the tests are as follows:
 
 ``` r
+# test-ar.R
+
 test_that("The test of the output for the exact same pair of target and proposal densities.", {
 
   ## initialise variables for testing
@@ -272,8 +275,45 @@ test_that("The test of the output for the exact same pair of target and proposal
 })
 ```
 
-If the test runs smoothly, the console with return `20` passed test
-item.
+The first test file, `test-ar.R` runs several tests regarding the output
+from several input scenarios. Basically, if the target and proposal
+distribution are of the same shape written in different form (in pdf
+form for the target distribution and following the templates of the
+proposal distribution) then the result should be the same. In the test
+file, we expect that the output from the target and proposal densities
+with the same shapes are correct and hence does not return any error
+messages (tested using `expect_silent()`), the acceptance rate of the
+proposal density with the same form as the target density is 1,
+indicating perfect match (tested using `expect_equal()`) and the
+expected value, when rounded to 1 decimal place, converges to the mean
+of the distribution (also tested using `expect_equal()`), and again, for
+target and proposal densities with the same shapes, the suggested
+minimum c equals to `NA`, indicating the proposal envelopes the target
+fully (tested using `expect_match()`, since `NA` is returned as a
+string).
+
+``` r
+# test-ar_summary.R
+
+test_that("Test of the input of the function ar_summary().", {
+
+  # expect error
+  expect_error(ar_summary("A"), "Input must be an object of class \"ar\"")
+  expect_error(ar_summary(1), "Input must be an object of class \"ar\"")
+  expect_error(ar_summary(c(1,2,3)), "Input must be an object of class \"ar\"")
+})
+```
+
+The next test file, `test-ar_summary.R`, tested the input passed to the
+function `ar_summary()`. Since it can only accept an object of class
+`ar` as input, passing object of different class will results in an
+error message `Input must be an object of class "ar"`. The test was
+conducted using different type of input, i.e. a string `"A"`, a numeric
+`1`, and a list `c(1,2,3)`.
+
+If both test files run successfully, the console will return `23` passed
+test items in total, with `20` tested items come from `test-ar.R` file
+and the remaining 3 items from `test-ar_summary.R` file.
 
 The content tested by the test file can be done by the user using the
 instruction below.
@@ -282,10 +322,8 @@ instruction below.
 
 Besides testing using the unit tests embedded in the installed package,
 user can also perform relevant testings by their own using their own
-input. The details are explain below.
-
-You will notice that in the above example, the expected mean and
-variance are rather nonsense, as we only run the sampler for a few
+input. You will notice that in the previous example, the expected mean
+and variance are rather nonsense, as we only run the sampler for a few
 iterations. To be able to provide a rather accurate results, we need to
 run the sampler long enough. An iteration of minimum of `n=1000` should
 provide suffice (this is also the default value for `n`), although for
@@ -313,8 +351,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0161 
-#>      Empirical variance of target distribution:  0.9989 
+#>      Empirical expected value of target distribution:  0.0279 
+#>      Empirical variance of target distribution:  0.9534 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -329,8 +367,8 @@ summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4981 
-#>      Empirical variance of target distribution:  0.0831 
+#>      Empirical expected value of target distribution:  0.5045 
+#>      Empirical variance of target distribution:  0.0843 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -345,8 +383,8 @@ summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.5051 
-#>      Empirical variance of target distribution:  0.742 
+#>      Empirical expected value of target distribution:  1.5209 
+#>      Empirical variance of target distribution:  0.7298 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -361,8 +399,8 @@ summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.6041 
-#>      Empirical variance of target distribution:  0.0384 
+#>      Empirical expected value of target distribution:  0.5987 
+#>      Empirical variance of target distribution:  0.0419 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -377,8 +415,8 @@ summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3638 
-#>      Empirical variance of target distribution:  0.1463 
+#>      Empirical expected value of target distribution:  0.3404 
+#>      Empirical variance of target distribution:  0.1136 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -438,9 +476,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergen
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.5074 
-#>      Empirical expected value of target distribution:  -0.0255 
-#>      Empirical variance of target distribution:  1.5868 
+#>      Acceptance rate:  0.5053 
+#>      Empirical expected value of target distribution:  -0.0131 
+#>      Empirical variance of target distribution:  1.5932 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -460,9 +498,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c 
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.3169 
-#>      Empirical expected value of target distribution:  0.0063 
-#>      Empirical variance of target distribution:  0.9717 
+#>      Acceptance rate:  0.3164 
+#>      Empirical expected value of target distribution:  0.016 
+#>      Empirical variance of target distribution:  1.0262 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -473,4 +511,25 @@ variance are now valid. ($`\hat{E(X)} \approx \mu`$ and
 $`\hat{Var(X)} \approx \sigma^2`$).
 
 You can try using different combinations of target-density pair for this
-part.
+part, such as Gamma and Uniform, or using more complicated target
+distribution, such as Kumaraswamy distribution (pdf:
+$`abx^{a-1}(1-x^a)^{b-1}`$) which has a support of \$x (0,1) \$ using
+$`U(0,1)`$ as the proposal distribution (make sure to convert $`a`$ and
+$`b`$ into numerics in the argument).
+
+### Test 3: Input to `ar_summary()` function
+
+The next part of the test is about the input to the function
+`ar_summary()`. As mentioned before, the input needs to be an object of
+class `ar` which is the output from the function `ar()`. Any other input
+to this function will result in an error message
+`Input must be an object of class "ar"`. The user can test this function
+with several inputs, such as string characters, numerical, list, etc. as
+the example below:
+
+``` r
+  ar_summary("A")
+  ar_summary(1)
+  ar_summary(c(1,2,3))
+})
+```

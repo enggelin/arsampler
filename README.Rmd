@@ -51,7 +51,7 @@ Read the short introductory vignette to get you started with `arsampler`. To loo
 vignette("introduction-to-arsampler")
 ```
 
-The vignette above basically explains that the package, in its current version, has 3 functions: `ar()`, which is the main function and outputs an object of class `ar`; `ar_summary()`, which receives input of an object of class `ar` and outputs the summary of the fitted densities; and `ar_plot()`, which receives input of an object of class `ar` and outputs the overlay plot of both the target and proposal densities (corrected with `c`, if defined) in a single plot. On this version, only two functions are ready to be used and tested, i.e. `ar()` and `ar_summary()`.
+The vignette above basically explains that the package, in its current version, has 3 functions: `ar()`, which is the main function and outputs an object of class `ar`; `ar_summary()`, which receives input of an object of class `ar` and outputs the summary of the fitted densities; and `ar_plot()`, which receives input of an object of class `ar` and outputs the overlay plot of both the target and proposal densities (scaled with `c`, if defined) in a single plot. In the current version, only two functions are ready to be used and tested, i.e. `ar()` and `ar_summary()`.
 
 
 ## Example
@@ -111,9 +111,11 @@ library(testthat)
 testthat::test_dir(system.file("tests", package = "arsampler"))
 ```
 
-The above command will test several scenarios defined by the author of this package. The unit testing comprises of several scenario which may arise in certain circumstances and the expected output from it. Inside the directory `tests/testthat/`, there is one test file names `test-ar.R`. The content of the file is as follows:
+The above command will test several scenarios defined by the author of this package. The unit testing comprises of several scenario which may arise in certain circumstances and the expected output from it. Inside the directory `tests/testthat/`, there are two test files named `test-ar.R` and `test-ar_summary.R`. The contents of the files and the context of the tests are as follows:
 
 ``` r
+# test-ar.R
+
 test_that("The test of the output for the exact same pair of target and proposal densities.", {
 
   ## initialise variables for testing
@@ -167,16 +169,30 @@ test_that("The test of the output for the exact same pair of target and proposal
 })
 ```
 
-If the test runs smoothly, the console with return `20` passed test item.
+The first test file, `test-ar.R` runs several tests regarding the output from several input scenarios. Basically, if the target and proposal distribution are of the same shape written in different form (in pdf form for the target distribution and following the templates of the proposal distribution) then the result should be the same. In the test file, we expect that the output from the target and proposal densities with the same shapes are correct and hence does not return any error messages (tested using `expect_silent()`), the acceptance rate of the proposal density with the same form as the target density is 1, indicating perfect match (tested using `expect_equal()`) and the expected value, when rounded to 1 decimal place, converges to the mean of the distribution (also tested using `expect_equal()`), and again, for target and proposal densities with the same shapes, the suggested minimum c equals to `NA`, indicating the proposal envelopes the target fully (tested using `expect_match()`, since `NA` is returned as a string).
+
+``` r
+# test-ar_summary.R
+
+test_that("Test of the input of the function ar_summary().", {
+
+  # expect error
+  expect_error(ar_summary("A"), "Input must be an object of class \"ar\"")
+  expect_error(ar_summary(1), "Input must be an object of class \"ar\"")
+  expect_error(ar_summary(c(1,2,3)), "Input must be an object of class \"ar\"")
+})
+```
+
+The next test file, `test-ar_summary.R`, tested the input passed to the function `ar_summary()`. Since it can only accept an object of class `ar` as input, passing object of different class will results in an error message `Input must be an object of class "ar"`. The test was conducted using different type of input, i.e. a string `"A"`, a numeric `1`, and a list `c(1,2,3)`.
+
+If both test files run successfully, the console will return `23` passed test items in total, with `20` tested items come from `test-ar.R` file and the remaining 3 items from `test-ar_summary.R` file.
 
 The content tested by the test file can be done by the user using the instruction below.
 
 
 ## Test plan: user input
 
-Besides testing using the unit tests embedded in the installed package, user can also perform relevant testings by their own using their own input. The details are explain below.
-
-You will notice that in the above example, the expected mean and variance are rather nonsense, as we only run the sampler for a few iterations. To be able to provide a rather accurate results, we need to run the sampler long enough. An iteration of minimum of `n=1000` should provide suffice (this is also the default value for `n`), although for some densities it needs to be run long enough (more about that later). In this test plan, we will try several scenarios of combination pair of target-proposal densities.
+Besides testing using the unit tests embedded in the installed package, user can also perform relevant testings by their own using their own input. You will notice that in the previous example, the expected mean and variance are rather nonsense, as we only run the sampler for a few iterations. To be able to provide a rather accurate results, we need to run the sampler long enough. An iteration of minimum of `n=1000` should provide suffice (this is also the default value for `n`), although for some densities it needs to be run long enough (more about that later). In this test plan, we will try several scenarios of combination pair of target-proposal densities.
 
 
 ### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution $\approx$ its mean
@@ -271,4 +287,16 @@ summary(example_norm_unif)
 
 The suggested minimum `c` is now `NA`, which means the proposal density now envelopes the target density fully, and the expected value and variance are now valid. ($\hat{E(X)} \approx \mu$ and $\hat{Var(X)} \approx \sigma^2$).
 
-You can try using different combinations of target-density pair for this part.
+You can try using different combinations of target-density pair for this part, such as Gamma and Uniform, or using more complicated target distribution, such as Kumaraswamy distribution (pdf: $abx^{a-1}(1-x^a)^{b-1}$) which has a support of $x \in (0,1) $ using $U(0,1)$ as the proposal distribution (make sure to convert $a$ and $b$ into numerics in the argument).
+
+
+### Test 3: Input to `ar_summary()` function
+
+The next part of the test is about the input to the function `ar_summary()`. As mentioned before, the input needs to be an object of class `ar` which is the output from the function `ar()`. Any other input to this function will result in an error message `Input must be an object of class "ar"`. The user can test this function with several inputs, such as string characters, numerical, list, etc. as the example below:
+
+``` r
+  ar_summary("A")
+  ar_summary(1)
+  ar_summary(c(1,2,3))
+})
+```
