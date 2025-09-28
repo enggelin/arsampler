@@ -18,7 +18,7 @@ target densities (see examples below).
 ## Installation
 
 You can install the released version of `arsampler` along with the unit
-tests with:
+tests and the vignettes with:
 
 ``` r
 # Install the relevant library (if not already)
@@ -28,7 +28,7 @@ install.packages("devtools")
 library(devtools)
 
 # Install the arsampler package from GitHub
-devtools::install_github("enggelin/arsampler", INSTALL_opts = "--install-tests")
+devtools::install_github("enggelin/arsampler", build_vignettes=TRUE, INSTALL_opts = "--install-tests")
 
 # Load the arsampler package
 library(arsampler)
@@ -90,26 +90,26 @@ example_norm
 #> 
 #> 
 #> $data
-#>    index          x         f         q          y r         u
-#> 1      1 -0.1861553 0.3920894 0.3920894 -0.1861553 1 0.8825036
-#> 2      2  1.3693353 0.1562219 0.1562219  1.3693353 1 0.5474148
-#> 3      3  0.7555070 0.2998917 0.2998917  0.7555070 1 0.5759246
-#> 4      4  0.4889673 0.3539913 0.3539913  0.4889673 1 0.1986933
-#> 5      5  0.8328134 0.2820340 0.2820340  0.8328134 1 0.2745776
-#> 6      6  0.3735722 0.3720539 0.3720539  0.3735722 1 0.2151500
-#> 7      7 -1.3341826 0.1638244 0.1638244 -1.3341826 1 0.8086515
-#> 8      8 -0.5980524 0.3336136 0.3336136 -0.5980524 1 0.2374345
-#> 9      9  1.2152907 0.1906332 0.1906332  1.2152907 1 0.2820018
-#> 10    10  0.9715395 0.2488555 0.2488555  0.9715395 1 0.9251391
+#>    index           x          f          q           y r         u
+#> 1      1  1.27549928 0.17686161 0.17686161  1.27549928 1 0.4751387
+#> 2      2 -0.42512440 0.36447260 0.36447260 -0.42512440 1 0.5423896
+#> 3      3 -0.05471121 0.39834565 0.39834565 -0.05471121 1 0.9235797
+#> 4      4  1.53152173 0.12347483 0.12347483  1.53152173 1 0.1583705
+#> 5      5 -1.67508141 0.09808828 0.09808828 -1.67508141 1 0.3055544
+#> 6      6 -0.72297065 0.30719216 0.30719216 -0.72297065 1 0.1185204
+#> 7      7 -0.09500111 0.39714607 0.39714607 -0.09500111 1 0.6096021
+#> 8      8  0.50024221 0.35202268 0.35202268  0.50024221 1 0.7643822
+#> 9      9  0.26810601 0.38485873 0.38485873  0.26810601 1 0.6327251
+#> 10    10  0.66484104 0.31983650 0.31983650  0.66484104 1 0.2967592
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.3888635
+#> [1] 0.1267321
 #> 
 #> $variance_f
-#> [1] 0.7332366
+#> [1] 0.8997019
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -121,8 +121,8 @@ ar_summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3889 
-#>      Empirical variance of target distribution:  0.7332 
+#>      Empirical expected value of target distribution:  0.1267 
+#>      Empirical variance of target distribution:  0.8997 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -152,26 +152,26 @@ print(example_norm)
 #> 
 #> 
 #> $data
-#>    index          x         f         q          y r         u
-#> 1      1 -0.1861553 0.3920894 0.3920894 -0.1861553 1 0.8825036
-#> 2      2  1.3693353 0.1562219 0.1562219  1.3693353 1 0.5474148
-#> 3      3  0.7555070 0.2998917 0.2998917  0.7555070 1 0.5759246
-#> 4      4  0.4889673 0.3539913 0.3539913  0.4889673 1 0.1986933
-#> 5      5  0.8328134 0.2820340 0.2820340  0.8328134 1 0.2745776
-#> 6      6  0.3735722 0.3720539 0.3720539  0.3735722 1 0.2151500
-#> 7      7 -1.3341826 0.1638244 0.1638244 -1.3341826 1 0.8086515
-#> 8      8 -0.5980524 0.3336136 0.3336136 -0.5980524 1 0.2374345
-#> 9      9  1.2152907 0.1906332 0.1906332  1.2152907 1 0.2820018
-#> 10    10  0.9715395 0.2488555 0.2488555  0.9715395 1 0.9251391
+#>    index           x          f          q           y r         u
+#> 1      1  1.27549928 0.17686161 0.17686161  1.27549928 1 0.4751387
+#> 2      2 -0.42512440 0.36447260 0.36447260 -0.42512440 1 0.5423896
+#> 3      3 -0.05471121 0.39834565 0.39834565 -0.05471121 1 0.9235797
+#> 4      4  1.53152173 0.12347483 0.12347483  1.53152173 1 0.1583705
+#> 5      5 -1.67508141 0.09808828 0.09808828 -1.67508141 1 0.3055544
+#> 6      6 -0.72297065 0.30719216 0.30719216 -0.72297065 1 0.1185204
+#> 7      7 -0.09500111 0.39714607 0.39714607 -0.09500111 1 0.6096021
+#> 8      8  0.50024221 0.35202268 0.35202268  0.50024221 1 0.7643822
+#> 9      9  0.26810601 0.38485873 0.38485873  0.26810601 1 0.6327251
+#> 10    10  0.66484104 0.31983650 0.31983650  0.66484104 1 0.2967592
 #> 
 #> $acceptance_rate
 #> [1] 1
 #> 
 #> $expected_values_f
-#> [1] 0.3888635
+#> [1] 0.1267321
 #> 
 #> $variance_f
-#> [1] 0.7332366
+#> [1] 0.8997019
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -183,8 +183,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3889 
-#>      Empirical variance of target distribution:  0.7332 
+#>      Empirical expected value of target distribution:  0.1267 
+#>      Empirical variance of target distribution:  0.8997 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -331,7 +331,7 @@ some densities it needs to be run long enough (more about that later).
 In this test plan, we will try several scenarios of combination pair of
 target-proposal densities.
 
-### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution $`\approx`$ its mean
+### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution $\approx$ its mean
 
 The package has several pre-defined probability densities for user to
 use. They are: `normal`, `uniform`, `gamma`, `beta`, and `exponential`.
@@ -351,8 +351,8 @@ summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.034 
-#>      Empirical variance of target distribution:  0.9675 
+#>      Empirical expected value of target distribution:  0.0075 
+#>      Empirical variance of target distribution:  1.0054 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -367,7 +367,7 @@ summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4842 
+#>      Empirical expected value of target distribution:  0.4979 
 #>      Empirical variance of target distribution:  0.0805 
 #>      Suggested minimum c:  NA 
 #> ----------------------
@@ -383,8 +383,8 @@ summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.5076 
-#>      Empirical variance of target distribution:  0.7828 
+#>      Empirical expected value of target distribution:  1.5577 
+#>      Empirical variance of target distribution:  0.8772 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -399,8 +399,8 @@ summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.6071 
-#>      Empirical variance of target distribution:  0.0379 
+#>      Empirical expected value of target distribution:  0.5967 
+#>      Empirical variance of target distribution:  0.0395 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -415,8 +415,8 @@ summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3437 
-#>      Empirical variance of target distribution:  0.1312 
+#>      Empirical expected value of target distribution:  0.3181 
+#>      Empirical variance of target distribution:  0.0901 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -440,22 +440,21 @@ able to approximate the mean of the target distribution. You can input
 your own parameters and see if the expected value match with the
 corresponding distributions. For reference:
 
-Normal distribution with $`\mu=0`$ and $`\sigma^2=1`$:
-$`X \sim N(0,1)`$; $`E(X)=\mu`$, $`Var(X)=\sigma^2`$;
+Normal distribution with $\mu=0$ and $\sigma^2=1$: $X \sim N(0,1)$;
+$E(X)=\mu$, $Var(X)=\sigma^2$;
 
-Uniform distribution with $`a=0`$ and $`b=1`$: $`X \sim U(0,1)`$;
-$`E(X)=\frac{a+b}{2}`$, $`Var(X)=\frac{(b-a)^2}{12}`$;
+Uniform distribution with $a=0$ and $b=1$: $X \sim U(0,1)$;
+$E(X)=\frac{a+b}{2}$, $Var(X)=\frac{(b-a)^2}{12}$;
 
-Gamma distribution with $`\alpha=3`$ and $`\beta=2`$:
-$`X \sim Gamma(3,2)`$; $`E(X)=\frac{\alpha}{\beta}`$,
-$`Var(X)=\frac{\alpha}{\beta^2}`$;
+Gamma distribution with $\alpha=3$ and $\beta=2$: $X \sim Gamma(3,2)$;
+$E(X)=\frac{\alpha}{\beta}$, $Var(X)=\frac{\alpha}{\beta^2}$;
 
-Beta distribution with $`\alpha=3`$ and $`\beta=2`$:
-$`X \sim Beta(3,2)`$; $`E(X)=\frac{\alpha}{\alpha+\beta}`$,
-$`Var(X)=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}`$;
+Beta distribution with $\alpha=3$ and $\beta=2$: $X \sim Beta(3,2)$;
+$E(X)=\frac{\alpha}{\alpha+\beta}$,
+$Var(X)=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$;
 
-Exponential distribution with $`\lambda=3`$: $`X \sim Exp(3)`$;
-$`E(X)=\frac{1}{\lambda}`$, $`Var(X)=\frac{1}{\lambda^2}`$;
+Exponential distribution with $\lambda=3$: $X \sim Exp(3)$;
+$E(X)=\frac{1}{\lambda}$, $Var(X)=\frac{1}{\lambda^2}$;
 
 You can also try different parameters to see how it works.
 
@@ -476,9 +475,9 @@ example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergen
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.5111 
-#>      Empirical expected value of target distribution:  0.0225 
-#>      Empirical variance of target distribution:  1.5972 
+#>      Acceptance rate:  0.5127 
+#>      Empirical expected value of target distribution:  0.01 
+#>      Empirical variance of target distribution:  1.5611 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -498,24 +497,24 @@ example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c 
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.3181 
-#>      Empirical expected value of target distribution:  0.0095 
-#>      Empirical variance of target distribution:  1.0586 
+#>      Acceptance rate:  0.312 
+#>      Empirical expected value of target distribution:  -0.0062 
+#>      Empirical variance of target distribution:  0.9647 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
 The suggested minimum `c` is now `NA`, which means the proposal density
 now envelopes the target density fully, and the expected value and
-variance are now valid. ($`\hat{E(X)} \approx \mu`$ and
-$`\hat{Var(X)} \approx \sigma^2`$).
+variance are now valid. ($\hat{E(X)} \approx \mu$ and
+$\hat{Var(X)} \approx \sigma^2$).
 
 You can try using different combinations of target-density pair for this
 part, such as Gamma and Uniform, or using more complicated target
 distribution, such as Kumaraswamy distribution (pdf:
-$`abx^{a-1}(1-x^a)^{b-1}`$) which has a support of $`x \in (0,1)`$ using
-$`U(0,1)`$ as the proposal distribution (make sure to convert $`a`$ and
-$`b`$ into numerics in the argument).
+$abx^{a-1}(1-x^a)^{b-1}$) which has a support of $x \in (0,1)$ using
+$U(0,1)$ as the proposal distribution (make sure to convert $a$ and $b$
+into numerics in the argument).
 
 ### Test 3: Input to `ar_summary()` function
 

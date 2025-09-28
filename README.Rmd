@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-You can install the released version of `arsampler` along with the unit tests with:
+You can install the released version of `arsampler` along with the unit tests and the vignettes with:
 
 ``` r
 # Install the relevant library (if not already)
@@ -35,7 +35,7 @@ install.packages("devtools")
 library(devtools)
 
 # Install the arsampler package from GitHub
-devtools::install_github("enggelin/arsampler", INSTALL_opts = "--install-tests")
+devtools::install_github("enggelin/arsampler", build_vignettes=TRUE, INSTALL_opts = "--install-tests")
 
 # Load the arsampler package
 library(arsampler)
