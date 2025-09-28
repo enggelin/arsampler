@@ -108,7 +108,7 @@ install.package("testthat")
 library(testthat)
 
 # Set the working directory to the package root, and run this command:
-testthat::test_dir(system.file("tests", package = "arsampler"))
+testthat::test_dir(system.file("tests/testthat", package = "arsampler"))
 ```
 
 The above command will test several scenarios defined by the author of this package. The unit testing comprises of several scenario which may arise in certain circumstances and the expected output from it. Inside the directory `tests/testthat/`, there are two test files named `test-ar.R` and `test-ar_summary.R`. The contents of the files and the context of the tests are as follows:
