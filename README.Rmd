@@ -295,8 +295,7 @@ You can try using different combinations of target-density pair for this part, s
 The next part of the test is about the input to the function `ar_summary()`. As mentioned before, the input needs to be an object of class `ar` which is the output from the function `ar()`. Any other input to this function will result in an error message `Input must be an object of class "ar"`. The user can test this function with several inputs, such as string characters, numerical, list, etc. as the example below:
 
 ``` r
-  ar_summary("A")
-  ar_summary(1)
-  ar_summary(c(1,2,3))
-})
+ar_summary("A")
+ar_summary(1)
+ar_summary(c(1,2,3))
 ```
