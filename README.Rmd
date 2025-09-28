@@ -287,7 +287,7 @@ summary(example_norm_unif)
 
 The suggested minimum `c` is now `NA`, which means the proposal density now envelopes the target density fully, and the expected value and variance are now valid. ($\hat{E(X)} \approx \mu$ and $\hat{Var(X)} \approx \sigma^2$).
 
-You can try using different combinations of target-density pair for this part, such as Gamma and Uniform, or using more complicated target distribution, such as Kumaraswamy distribution (pdf: $abx^{a-1}(1-x^a)^{b-1}$) which has a support of $x \in (0,1) $ using $U(0,1)$ as the proposal distribution (make sure to convert $a$ and $b$ into numerics in the argument).
+You can try using different combinations of target-density pair for this part, such as Gamma and Uniform, or using more complicated target distribution, such as Kumaraswamy distribution (pdf: $abx^{a-1}(1-x^a)^{b-1}$) which has a support of $x \in (0,1)$ using $U(0,1)$ as the proposal distribution (make sure to convert $a$ and $b$ into numerics in the argument).
 
 
 ### Test 3: Input to `ar_summary()` function
