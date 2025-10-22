@@ -28,6 +28,16 @@
 
 ar <- function(f, q, c=1, n=1000) {
 
+  if (c < 1 || c == Inf || c == -Inf || !is.numeric(c)){
+    stop("Invalid value of c; needs to be numeric and > 1.")
+  }
+
+  if (n < 1){
+    stop("n has to be an integer of minimum value of 1.")
+  }
+
+  n = round(n)
+
   # sample x from the proposal distribution
   q_expr <- parse(text = q)
   x <- eval(q_expr)
@@ -75,7 +85,7 @@ ar <- function(f, q, c=1, n=1000) {
 
   #accept if u < r
   accept <- (u < r)
-  y <- ifelse(accept, x, 0)
+  y <- ifelse(accept, x, NA_real_)
 
   #suggested c
   suggested_c <- ifelse(max(r[is.finite(r)])> (1+1e-3), max(r[is.finite(r)]), "NA") # tolerance epsilon 1e-3 = 0.001
@@ -95,9 +105,9 @@ ar <- function(f, q, c=1, n=1000) {
   result <- list(
     params = list(f = f, q = q, c = c, n = n),
     data = data,
-    acceptance_rate = mean(y != 0),
-    expected_values_f = mean(y[y != 0]),
-    variance_f = stats::var(y[y != 0]),
+    acceptance_rate = mean(!is.na(y)),
+    expected_values_f = mean(y[!is.na(y)]),
+    variance_f = stats::var(y[!is.na(y)]),
     suggested_c = suggested_c
   )
 
