@@ -1,10 +1,9 @@
-#' Data of an object of class `ar`
+#' Data of an object of class `ar` or `ar_conv`.
 #'
-#' Show the data for an object of class `ar`.
+#' Show the data for an object of class `ar` or `ar_conv`.
 #'
-#' @param x an object of class `ar`.
-#' @param ... additional arguments.
-#' @return the data of an object of class `ar` with the following components: `x`, `f`, `q`, `y`, `r`, and `u`.
+#' @param object an object of class `ar` or `ar_conv`.
+#' @return \code{ar_print} returns different results depending on the class of the input object. If the input object is `ar`, this function will return a list with the following components: `x`, `f`, `q`, `y`, `r`, and `u`, whereas if the input object is of class `ar_conv`, this function will return a list with the following components: `acceptance_rate_cumulative`, `y`, `mean_cumulative`, and `var_cumulative`.
 #' @export
 
 ar_print <- function(object) {

@@ -18,7 +18,8 @@ LinkingTo:
     Rcpp
 Imports: 
     Rcpp,
-    stats
+    stats,
+    ggplot2
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,

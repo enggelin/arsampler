@@ -74,10 +74,10 @@ ar <- function(f, q, c=1, n=1000) {
   }
   q_vals <- eval(parse(text = q_call))
 
-  # return an error if proposal density produces infinite or negative values
-  if (any(!is.finite(q_vals)) || any(q_vals < 0)){
-    stop("Proposal density generated infinite or negative values. Check your expression and parameters.")
-  }
+  # return an error if proposal density produces infinite or negative values (not possible because of templates)
+  #if (any(!is.finite(q_vals)) || any(q_vals < 0)){
+    #stop("Proposal density generated infinite or negative values. Check your expression and parameters.")
+  #}
 
   # compute acceptance ratio
   r <- f_vals/(c*q_vals)

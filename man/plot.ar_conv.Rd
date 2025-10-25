@@ -2,12 +2,14 @@
 % Please edit documentation in R/plot.R
 \name{plot.ar_conv}
 \alias{plot.ar_conv}
-\title{Plots of an object of class `ar_conv`.}
+\title{Convergence plots of an object of class `ar_conv`.}
 \usage{
-\method{plot}{ar_conv}(model, which = c(1, 2, 3, 4))
+\method{plot}{ar_conv}(x, which = c(1, 2, 3, 4), ...)
 }
 \arguments{
-\item{model}{an object of class `ar_conv`.}
+\item{x}{an object of class `ar_conv`.}
+
+\item{which}{index of convergence plot to be shown. Consists of index 1 (acceptance rate), 2 (y values), 3 (mean), and 4 (variance).}
 
 \item{...}{additional arguments}
 }
@@ -15,5 +17,5 @@
 Convergence plots of the sampler.
 }
 \description{
-Display an overlay plot of the target density f(x) and proposal density q(x).
+Display convergence plots for an object of class `ar_conv`.
 }

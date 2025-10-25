@@ -2,18 +2,16 @@
 % Please edit documentation in R/ar_print.R
 \name{ar_print}
 \alias{ar_print}
-\title{Data of an object of class `ar`}
+\title{Data of an object of class `ar` or `ar_conv`.}
 \usage{
 ar_print(object)
 }
 \arguments{
-\item{x}{an object of class `ar`.}
-
-\item{...}{additional arguments.}
+\item{object}{an object of class `ar` or `ar_conv`.}
 }
 \value{
-the data of an object of class `ar` with the following components: `x`, `f`, `q`, `y`, `r`, and `u`.
+\code{ar_print} returns different results depending on the class of the input object. If the input object is `ar`, this function will return a list with the following components: `x`, `f`, `q`, `y`, `r`, and `u`, whereas if the input object is of class `ar_conv`, this function will return a list with the following components: `acceptance_rate_cumulative`, `y`, `mean_cumulative`, and `var_cumulative`.
 }
 \description{
-Show the data for an object of class `ar`.
+Show the data for an object of class `ar` or `ar_conv`.
 }

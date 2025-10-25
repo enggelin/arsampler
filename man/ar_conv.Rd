@@ -2,7 +2,7 @@
 % Please edit documentation in R/ar_conv.R
 \name{ar_conv}
 \alias{ar_conv}
-\title{Convergence diagnostics of an object of class `ar`.}
+\title{Convergence object of an object of class `ar`.}
 \usage{
 ar_conv(object)
 }
@@ -10,8 +10,14 @@ ar_conv(object)
 \item{object}{an object of class `ar`.}
 }
 \value{
-The convergence diagnostic of an object of class `ar` with the following components: `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.
+\describe{\code{ar_conv} returns an object of class "ar_conv". An object of class "ar_conv" is a list containing the following components:
+  \item{acceptance_rate_cumulative}{Ratio of accepted \code{x}, cumulative.}
+  \item{y}{Accepted values \code{y}.}
+  \item{mean_cumulative}{Sample mean of accepted values, cumulative.}
+  \item{var_cumulative}{Sample variance of accepted values, cumulative.}
+\describe{These components are used for the convergence plot using the function "ar_plot()" or "plot()."}
+}
 }
 \description{
-Provide a convergence diagnostic for an object of class `ar`.
+Provide a convergence object for an object of class `ar`.
 }

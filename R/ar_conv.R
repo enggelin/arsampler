@@ -1,14 +1,21 @@
-#' Convergence diagnostics of an object of class `ar`.
+#' Convergence object of an object of class `ar`.
 #'
-#' Provide a convergence diagnostic for an object of class `ar`.
+#' Provide a convergence object for an object of class `ar`.
 #'
 #' @param object an object of class `ar`.
-#' @return The convergence diagnostic of an object of class `ar` with the following components: `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.
+#' @return
+#' \describe{\code{ar_conv} returns an object of class "ar_conv". An object of class "ar_conv" is a list containing the following components:
+#'   \item{acceptance_rate_cumulative}{Ratio of accepted \code{x}, cumulative.}
+#'   \item{y}{Accepted values \code{y}.}
+#'   \item{mean_cumulative}{Sample mean of accepted values, cumulative.}
+#'   \item{var_cumulative}{Sample variance of accepted values, cumulative.}
+#' \describe{These components are used for the convergence plot using the function "ar_plot()" or "plot()."}
+#' }
 #' @export
 
 ar_conv <- function(object) {
   if (!inherits(object, "ar")){
-    stop("Input must be an object of class \"ar\"")
+    stop("Input must be an object of class \"ar\".")
   }
 
   obj_name <- deparse(substitute(object))

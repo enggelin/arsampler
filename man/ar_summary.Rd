@@ -10,7 +10,7 @@ ar_summary(object)
 \item{object}{an object of class `ar`.}
 }
 \value{
-The summary of an object of class `ar` with the following components: `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.
+The summary of an object of class `ar` with the following components: `number of iterations`, `acceptance rate`, `empirical expected value of target distribution`, `empirical variance of target distribution`, `suggested minimum c`.
 }
 \description{
 Provide a summary for an object of class `ar`.

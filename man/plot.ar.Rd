@@ -4,16 +4,10 @@
 \alias{plot.ar}
 \title{Plots of an object of class `ar`.}
 \usage{
-\method{plot}{ar}(
-  model,
-  main = "Target vs Proposal PDF",
-  xlab = "x",
-  ylab = "Density",
-  pos = "bottom"
-)
+\method{plot}{ar}(x, ...)
 }
 \arguments{
-\item{model}{an object of class `ar`.}
+\item{x}{an object of class `ar`.}
 
 \item{...}{additional arguments}
 }

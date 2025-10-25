@@ -2,23 +2,18 @@
 % Please edit documentation in R/ar_plot.R
 \name{ar_plot}
 \alias{ar_plot}
-\title{ar_plot}
+\title{Plots of `ar` and `ar_conv`.}
 \usage{
-ar_plot(
-  model,
-  main = "Target vs Proposal PDF",
-  xlab = "x",
-  ylab = "Density",
-  pos = "bottom",
-  which = c(1, 2, 3, 4)
-)
+ar_plot(model, which = c(1, 2, 3, 4))
 }
 \arguments{
-\item{model}{an object of class `ar`.}
+\item{model}{an object of class `ar` or `ar_conv`.}
+
+\item{which}{index of convergence plot to be shown. Consists of index 1 (acceptance rate), 2 (y values), 3 (mean), and 4 (variance).}
 }
 \value{
-An overlay plot of the target density f(x) and proposal density q(x).
+An overlay plot of the target density f(x) and proposal density q(x) for an object of class `ar`, or convergence plots for an object of class `ar_conv`.
 }
 \description{
-Display an overlay plot of the target density f(x) and proposal density q(x).
+Display an overlay plot of the target density f(x) and proposal density q(x) for an object of class `ar`, or convergence plots for an object of class `ar_conv`.
 }

@@ -49,3 +49,30 @@ test_that("The test of the output for the exact same pair of target and proposal
   expect_match(ar(f_beta, q_beta, c=1, n=1000)$suggested_c, "NA")
   expect_match(ar(f_exp, q_exp, c=1, n=1000)$suggested_c, "NA")
 })
+
+
+test_that("Test of the values of c (feedback from peer review).", {
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error
+  expect_error(ar(f_norm, q_norm, c=0), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=0.5), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=Inf), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=-Inf), "Invalid value of c; needs to be numeric and > 1.")
+})
+
+
+test_that("Test of the valid values of n.", {
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error
+  expect_error(ar(f_norm, q_norm, c=1, n=0), "n has to be an integer of minimum value of 1.")
+  expect_error(ar(f_norm, q_norm, c=1, n=0.5), "n has to be an integer of minimum value of 1.")
+
+  # expect silent
+  expect_silent(ar(f_norm, q_norm, c=1, n=1.5)) # decimal values converted to the nearest rounding
+})
