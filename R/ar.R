@@ -38,6 +38,13 @@ ar <- function(f, q, c=1, n=1000) {
 
   n = round(n)
 
+  # infer proposal pdf function
+  q_name <- gsub("\\(.*", "", q)   # "rnorm"
+  d_name <- sub("^r", "d", q_name) # "dnorm"
+  if (!exists(d_name, mode = "function")) {
+    stop(paste("Cannot find density function for", q_name))
+  }
+
   # sample x from the proposal distribution
   q_expr <- parse(text = q)
   x <- eval(q_expr)
@@ -48,13 +55,6 @@ ar <- function(f, q, c=1, n=1000) {
   # return an error if the target density produces infinite or negative values
   if (any(!is.finite(f_vals)) || any(f_vals < 0)){
     stop("Target density generated infinite or negative values. Check your expression and parameters.")
-  }
-
-  # infer proposal pdf function
-  q_name <- gsub("\\(.*", "", q)   # "rnorm"
-  d_name <- sub("^r", "d", q_name) # "dnorm"
-  if (!exists(d_name, mode = "function")) {
-    stop(paste("Cannot find density function for", q_name))
   }
 
   # extract parameters inside parentheses

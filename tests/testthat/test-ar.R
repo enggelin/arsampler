@@ -76,3 +76,27 @@ test_that("Test of the valid values of n.", {
   # expect silent
   expect_silent(ar(f_norm, q_norm, c=1, n=1.5)) # decimal values converted to the nearest rounding
 })
+
+
+test_that("Test whether the proposal templates is valid or not valid",{
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+  q_norm_wrong <- "rnor(n,0,1)"
+
+  # expect silent (proposal is valid)
+  expect_silent(ar(f_norm, q_norm))
+
+  # expect error (proposal is wrong)
+  expect_error(ar(f_norm, q_norm_wrong), "Cannot find density function for rnor")
+})
+
+
+test_that("Test whether the target distribution is invalid (returns negative values or infinity).", {
+  ## initialise variables for testing
+  f_wrong <- "x+(x^2)"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error (proposal is wrong)
+  expect_error(ar(f_wrong, q_norm), "Target density generated infinite or negative values. Check your expression and parameters.")
+})

@@ -11,7 +11,7 @@
 
 `arsampler` is a package to help perform the acceptance-rejection
 sampling without having to code the entire algorithm itself. The current
-version of this package (Version 0.1.0) can only accept a proposal
+version of this package (Version 1.0.0) can only accept a proposal
 densities from pre-defined templates while the user can define their own
 target densities (see examples below).
 
@@ -42,18 +42,21 @@ after this section.
 
 ``` r
 # Read the short vignette
+browseVignettes("arsampler")
 vignette("introduction-to-arsampler")
 ```
 
-The vignette above basically explains that the package, in its current
-version, has 3 functions: `ar()`, which is the main function and outputs
-an object of class `ar`; `ar_summary()`, which receives input of an
-object of class `ar` and outputs the summary of the fitted densities;
-and `ar_plot()`, which receives input of an object of class `ar` and
-outputs the overlay plot of both the target and proposal densities
-(scaled with `c`, if defined) in a single plot. In the current version,
-only two functions are ready to be used and tested, i.e. `ar()` and
-`ar_summary()`.
+The vignette above basically explains that the package has 4 functions:
+`ar()`, which is the main function and outputs an object of class `ar`;
+`ar_summary()`, which receives input of an object of class `ar` or
+`ar_conv` and outputs the summary of the acceptance-rejection sampling;
+`ar_plot()`, which receives input of an object of class `ar` or
+`ar_conv` and outputs the overlay plot of both the target and proposal
+densities (scaled with `c`, if defined) in a single plot (for object
+`ar`) or convergence plots (for object `ar_conv`); and `ar_conv`, which
+receives input of an object of class `ar` and outputs an object of class
+`ar_conv`, which contains transformed data from object `ar` for
+convergence diagnostic purposes.
 
 ## Example
 
@@ -64,130 +67,194 @@ library(arsampler)
 
 # Target density: Normal(0,1); Proposal density: Normal(0,1)
 f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
-q_norm <- "rnorm(n, 0, 1)"
+q_unif <- "runif(n, -4, 4)"
 
 # Run the main function ar()
-example_norm <- ar(f_norm, q_norm, c=1, n=10)
+example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10)
 ```
 
 ``` r
-# Print the raw values of the fitted densities
-example_norm
-#> Data of  x :
+# Print the raw values of the sampler
+ar_print(example_norm_unif)
+#> Data of  example_norm_unif :
 #> 
 #> $params
 #> $params$f
 #> [1] "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 #> 
 #> $params$q
-#> [1] "rnorm(n, 0, 1)"
+#> [1] "runif(n, -4, 4)"
 #> 
 #> $params$c
-#> [1] 1
+#> [1] 3.2
 #> 
 #> $params$n
 #> [1] 10
 #> 
 #> 
 #> $data
-#>    index           x          f          q           y r         u
-#> 1      1  1.27549928 0.17686161 0.17686161  1.27549928 1 0.4751387
-#> 2      2 -0.42512440 0.36447260 0.36447260 -0.42512440 1 0.5423896
-#> 3      3 -0.05471121 0.39834565 0.39834565 -0.05471121 1 0.9235797
-#> 4      4  1.53152173 0.12347483 0.12347483  1.53152173 1 0.1583705
-#> 5      5 -1.67508141 0.09808828 0.09808828 -1.67508141 1 0.3055544
-#> 6      6 -0.72297065 0.30719216 0.30719216 -0.72297065 1 0.1185204
-#> 7      7 -0.09500111 0.39714607 0.39714607 -0.09500111 1 0.6096021
-#> 8      8  0.50024221 0.35202268 0.35202268  0.50024221 1 0.7643822
-#> 9      9  0.26810601 0.38485873 0.38485873  0.26810601 1 0.6327251
-#> 10    10  0.66484104 0.31983650 0.31983650  0.66484104 1 0.2967592
+#>    index          x           f     q          y          r          u
+#> 1      1  0.9957999 0.242987024 0.125  0.9957999 0.60746756 0.01760016
+#> 2      2  3.4514598 0.001033064 0.125         NA 0.00258266 0.36711522
+#> 3      3  2.7272060 0.009679308 0.125         NA 0.02419827 0.34499554
+#> 4      4  2.1678170 0.038057629 0.125         NA 0.09514407 0.31578285
+#> 5      5 -1.4372958 0.142011362 0.125         NA 0.35502840 0.52685070
+#> 6      6 -0.1039041 0.396794581 0.125 -0.1039041 0.99198645 0.64931493
+#> 7      7  0.8037927 0.288811844 0.125  0.8037927 0.72202961 0.27479228
+#> 8      8 -1.0265819 0.235540176 0.125         NA 0.58885044 0.72476675
+#> 9      9  2.4775815 0.018534089 0.125         NA 0.04633522 0.52195874
+#> 10    10  1.5491069 0.120175193 0.125  1.5491069 0.30043798 0.21321169
 #> 
 #> $acceptance_rate
-#> [1] 1
+#> [1] 0.4
 #> 
 #> $expected_values_f
-#> [1] 0.1267321
+#> [1] 0.8111989
 #> 
 #> $variance_f
-#> [1] 0.8997019
+#> [1] 0.472018
 #> 
 #> $suggested_c
 #> [1] "NA"
 ```
 
 ``` r
-# Provide a summary of the fitted densities
-ar_summary(example_norm)
-#> Summary of  example_norm :
+# Provide a summary of the sampler
+ar_summary(example_norm_unif)
+#> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.1267 
-#>      Empirical variance of target distribution:  0.8997 
+#>      Number of iterations:  10 
+#>      Acceptance rate:  0.4 
+#>      Empirical expected value of target distribution:  0.8112 
+#>      Empirical variance of target distribution:  0.472 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
-The above output can also be achieved by using the commands `print()`
-and `summary()`, which is an S3 object-oriented method in R. Those
-commands are overridden if the user passes an object of class `ar`,
-which is the object class of the output from the function `ar()`.
+``` r
+# Provide an overlay plot of the sampler
+ar_plot(example_norm_unif)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+The above output can also be achieved by using the commands `print()`,
+`summary()`, and `plot()`, which is an S3 object-oriented method in R.
+Those commands are overridden if the user passes an object of class
+`ar`, which is the object class of the output from the function `ar()`.
 
 ``` r
-# Print the raw values of the fitted densities using S3 method print()
-print(example_norm)
-#> Data of  example_norm :
+# Print the raw values of the sampler using S3 method print()
+print(example_norm_unif)
+#> Data of  example_norm_unif :
 #> 
 #> $params
 #> $params$f
 #> [1] "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 #> 
 #> $params$q
-#> [1] "rnorm(n, 0, 1)"
+#> [1] "runif(n, -4, 4)"
 #> 
 #> $params$c
-#> [1] 1
+#> [1] 3.2
 #> 
 #> $params$n
 #> [1] 10
 #> 
 #> 
 #> $data
-#>    index           x          f          q           y r         u
-#> 1      1  1.27549928 0.17686161 0.17686161  1.27549928 1 0.4751387
-#> 2      2 -0.42512440 0.36447260 0.36447260 -0.42512440 1 0.5423896
-#> 3      3 -0.05471121 0.39834565 0.39834565 -0.05471121 1 0.9235797
-#> 4      4  1.53152173 0.12347483 0.12347483  1.53152173 1 0.1583705
-#> 5      5 -1.67508141 0.09808828 0.09808828 -1.67508141 1 0.3055544
-#> 6      6 -0.72297065 0.30719216 0.30719216 -0.72297065 1 0.1185204
-#> 7      7 -0.09500111 0.39714607 0.39714607 -0.09500111 1 0.6096021
-#> 8      8  0.50024221 0.35202268 0.35202268  0.50024221 1 0.7643822
-#> 9      9  0.26810601 0.38485873 0.38485873  0.26810601 1 0.6327251
-#> 10    10  0.66484104 0.31983650 0.31983650  0.66484104 1 0.2967592
+#>    index          x           f     q          y          r          u
+#> 1      1  0.9957999 0.242987024 0.125  0.9957999 0.60746756 0.01760016
+#> 2      2  3.4514598 0.001033064 0.125         NA 0.00258266 0.36711522
+#> 3      3  2.7272060 0.009679308 0.125         NA 0.02419827 0.34499554
+#> 4      4  2.1678170 0.038057629 0.125         NA 0.09514407 0.31578285
+#> 5      5 -1.4372958 0.142011362 0.125         NA 0.35502840 0.52685070
+#> 6      6 -0.1039041 0.396794581 0.125 -0.1039041 0.99198645 0.64931493
+#> 7      7  0.8037927 0.288811844 0.125  0.8037927 0.72202961 0.27479228
+#> 8      8 -1.0265819 0.235540176 0.125         NA 0.58885044 0.72476675
+#> 9      9  2.4775815 0.018534089 0.125         NA 0.04633522 0.52195874
+#> 10    10  1.5491069 0.120175193 0.125  1.5491069 0.30043798 0.21321169
 #> 
 #> $acceptance_rate
-#> [1] 1
+#> [1] 0.4
 #> 
 #> $expected_values_f
-#> [1] 0.1267321
+#> [1] 0.8111989
 #> 
 #> $variance_f
-#> [1] 0.8997019
+#> [1] 0.472018
 #> 
 #> $suggested_c
 #> [1] "NA"
 ```
 
 ``` r
-# Provide a summary of the fitted densities using S3 method summary()
-summary(example_norm)
-#> Summary of  example_norm :
+# Provide a summary of the sampler using S3 method summary()
+summary(example_norm_unif)
+#> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.1267 
-#>      Empirical variance of target distribution:  0.8997 
+#>      Number of iterations:  10 
+#>      Acceptance rate:  0.4 
+#>      Empirical expected value of target distribution:  0.8112 
+#>      Empirical variance of target distribution:  0.472 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
+
+``` r
+# Provide an overlay plot of the sampler using S3 method plot()
+plot(example_norm_unif)
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+
+The variable `example_norm_unif`, which is an object of class `ar`, can
+also be passed into the function `ar_conv()`, which will create an
+object of class `ar_conv` that can also be passed to the function
+`ar_print()`, `ar_summary()`, and `ar_plot()`. These functions display
+different outputs based on the class of the input object.
+
+``` r
+# Pass an object of class "ar" into the function "ar_conv()"
+example_norm_unif_conv <- ar_conv(example_norm_unif)
+```
+
+``` r
+# Print the raw values of the convergence data
+ar_print(example_norm_unif_conv)
+#> Convergence data of  example_norm_unif_conv :
+#> 
+#> $data
+#>    index acceptance_rate_cumulative          y mean_cumulative var_cumulative
+#> 1      1                  1.0000000  0.9957999       0.9957999      0.9957999
+#> 2      2                  0.5000000         NA       0.9957999      0.9957999
+#> 3      3                  0.3333333         NA       0.9957999      0.9957999
+#> 4      4                  0.2500000         NA       0.9957999      0.9957999
+#> 5      5                  0.2000000         NA       0.9957999      0.9957999
+#> 6      6                  0.3333333 -0.1039041       0.4459479      0.6046744
+#> 7      7                  0.4285714  0.8037927       0.5652295      0.3450215
+#> 8      8                  0.3750000         NA       0.5652295      0.3450215
+#> 9      9                  0.3333333         NA       0.5652295      0.3450215
+#> 10    10                  0.4000000  1.5491069       0.8111989      0.4720180
+```
+
+``` r
+# Provide a summary of the convergence data
+ar_summary(example_norm_unif_conv)
+#> Convergence summary of  example_norm_unif_conv :
+#> ----------------------
+#>      Acceptance rate:  0.4 
+#>      Empirical expected value of target distribution:  0.8112 
+#>      Empirical variance of target distribution:  0.472 
+#> ----------------------
+```
+
+``` r
+# Provide convergence plots of the convergence data
+ar_plot(example_norm_unif_conv)
+```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" /><img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" /><img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
 
 ## Test plan: unit testing
 
@@ -215,9 +282,183 @@ testthat::test_dir(system.file("tests/testthat", package = "arsampler"))
 The above command will test several scenarios defined by the author of
 this package. The unit testing comprises of several scenario which may
 arise in certain circumstances and the expected output from it. Inside
-the directory `tests/testthat/`, there are two test files named
-`test-ar.R` and `test-ar_summary.R`. The contents of the files and the
-context of the tests are as follows:
+the directory `tests/testthat/`, there are five test files named
+`test-ar_conv.R`, `test-ar_plot.R`, `test-ar_print.R`,
+`test-ar_summary.R`, and `test-ar.R`. The contents of the test files and
+the context of the tests are explained below:
+
+### Test file 1. `test-ar_conv.R`
+
+The first test file, `test-ar_conv.R`, test whether the input to the
+function `ar_conv()` is an object of class `ar`, thus a valid input.
+Other invalid inputs, such as object of class `string` or `numeric` will
+not be accepted and results in the error message:
+`Input must be an object of class "ar".`. The content of the test file
+is as follows:
+
+``` r
+# test-ar_conv.R
+
+test_that("Test of the input of the function ar_conv().", {
+
+  # expect error
+  expect_error(ar_conv("A"), "Input must be an object of class \"ar\".")
+  expect_error(ar_conv(1), "Input must be an object of class \"ar\".")
+  expect_error(ar_conv(c(1,2,3)), "Input must be an object of class \"ar\".")
+})
+```
+
+### Test file 2. `test-ar_plot.R`
+
+The next test file, `test-ar_plot.R`, test whether the input to the
+function `ar_plot()` is an object of class `ar` or `ar_conv`, thus a
+valid input. Other invalid inputs, such as object of class `string` or
+`numeric` will not be accepted and results in the error message:
+`Input must be an object of class "ar" or "ar_conv".`. This file also
+test whether there are no errors/warnings/messages/fails and some output
+exists when running the function on an object of class `ar`. The content
+of the test file is as follows:
+
+``` r
+# test-ar_plot.R
+
+test_that("Test of the input of the function ar_plot().", {
+
+  # expect error
+  expect_error(ar_plot("A"), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_plot(1), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_plot(c(1,2,3)), "Input must be an object of class \"ar\" or \"ar_conv\".")
+})
+
+
+test_that("Test of valid outputs of the function ar_plot().", {
+  # pair of standard normal distribution and uniform distribution
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_unif <- "runif(n, -4, 4)"
+  set.seed(0)
+  example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+  example_norm_unif_conv <- ar_conv(example_norm_unif)
+
+  # expect no errors/fails/messages/warning of the output of input "ar" and no errors of "ar_conv".
+  expect_no_condition(ar_plot(example_norm_unif))
+  expect_no_condition(plot(example_norm_unif))
+})
+```
+
+### Test file 3. `test-ar_print.R`
+
+The next test file, `test-ar_print.R`, test whether the input to the
+function `ar_print()` is an object of class `ar` or `ar_conv`, thus a
+valid input. Other invalid inputs, such as object of class `string` or
+`numeric` will not be accepted and results in the error message:
+`Input must be an object of class "ar" or "ar_conv".`. This file also
+test whether there are no errors/warnings/messages/fails and some output
+exists when running the function on an object of class `ar` and
+`ar_conv`. The content of the test file is as follows:
+
+``` r
+# test-ar_print.R
+
+test_that("Test of the input of the function ar_print().", {
+
+  # expect error
+  expect_error(ar_print("A"), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_print(1), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_print(c(1,2,3)), "Input must be an object of class \"ar\" or \"ar_conv\".")
+})
+
+
+test_that("Test of valid outputs of the function ar_print().", {
+  # pair of standard normal distribution and uniform distribution
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_unif <- "runif(n, -4, 4)"
+  set.seed(0)
+  example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+  example_norm_unif_conv <- ar_conv(example_norm_unif)
+
+  # expect no errors/fails/messages/warning of the output of input "ar".
+  expect_no_condition(ar_print(example_norm_unif))
+  expect_no_condition(print(example_norm_unif))
+
+  # expect no errors/fails/messages/warning of the output of input "ar_conv".
+  expect_no_condition(print(example_norm_unif_conv))
+  expect_no_condition(ar_print(example_norm_unif_conv))
+})
+```
+
+### Test file 4. `test-ar_summary.R`
+
+The test file `test-ar_summary.R` tests whether the input to the
+function `ar_summary()` is an object of class `ar` or `ar_conv`, thus a
+valid input. Other invalid inputs, such as object of class `string` or
+`numeric` will not be accepted and results in the error message:
+`Input must be an object of class "ar" or "ar_conv".`. This file also
+test whether there are no errors/warnings/messages/fails and some output
+exists when running the function on an object of class `ar` and
+`ar_conv`. The content of the test file is as follows:
+
+``` r
+# test-ar_summary.R
+
+test_that("Test of the input of the function ar_summary().", {
+
+  # expect error
+  expect_error(ar_summary("A"), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_summary(1), "Input must be an object of class \"ar\" or \"ar_conv\".")
+  expect_error(ar_summary(c(1,2,3)), "Input must be an object of class \"ar\" or \"ar_conv\".")
+})
+
+
+test_that("Test of valid outputs of the function ar_summary().", {
+  # pair of standard normal distribution and uniform distribution
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_unif <- "runif(n, -4, 4)"
+  set.seed(0)
+  example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+  example_norm_unif_conv <- ar_conv(example_norm_unif)
+
+  # expect no errors/fails/messages/warning of the output of input "ar".
+  expect_no_condition(summary(example_norm_unif))
+  expect_no_condition(ar_summary(example_norm_unif))
+
+  # expect no errors/fails/messages/warning of the output of input "ar_conv".
+  expect_no_condition(summary(example_norm_unif_conv))
+  expect_no_condition(ar_summary(example_norm_unif_conv))
+})
+```
+
+### Test file 5. `test-ar.R`
+
+The last test file, `test-ar.R`, tests the main function, thus has the
+most test items. The first part of the tests is regarding the output
+from several input scenarios. Basically, if the target and proposal
+distribution are of the same shape written in different form (in pdf
+form for the target distribution and following the templates of the
+proposal distribution) then the result should be the same. In the test
+file, we expect that the output from the target and proposal densities
+with the same shapes are correct and hence does not return any error
+messages (tested using `expect_silent()`), the acceptance rate of the
+proposal density with the same form as the target density is 1,
+indicating perfect match (tested using `expect_equal()`) and the
+expected value, when rounded to 1 decimal place, converges to the mean
+of the distribution (also tested using `expect_equal()`), and again, for
+target and proposal densities with the same shapes, the suggested
+minimum c equals to `NA`, indicating the proposal envelopes the target
+fully (tested using `expect_match()`, since `NA` is returned as a
+string).
+
+The second part of the test file is regarding the peer review feedback,
+which is to check the value of *c* entered. The function will not accept
+value of *c* if it is $\le 1$ or Inf, therefore this part of the test
+checks whether the value of *c* is valid. The third part of the test
+file is regarding the value of *n*. *n* needs to be $\ge 1$ and if it is
+decimals (but still $\ge 1$) it will be rounded mathematically.
+
+The fourth and the final part of the tests check the output of the
+proposal and target distributions. Basically, if the proposal is not
+found in any templates, the function will return an error. If the target
+density input results in any negative or infinity values, it will also
+return an error message. Below is the full content of the test file.
 
 ``` r
 # test-ar.R
@@ -273,50 +514,91 @@ test_that("The test of the output for the exact same pair of target and proposal
   expect_match(ar(f_beta, q_beta, c=1, n=1000)$suggested_c, "NA")
   expect_match(ar(f_exp, q_exp, c=1, n=1000)$suggested_c, "NA")
 })
-```
 
-The first test file, `test-ar.R` runs several tests regarding the output
-from several input scenarios. Basically, if the target and proposal
-distribution are of the same shape written in different form (in pdf
-form for the target distribution and following the templates of the
-proposal distribution) then the result should be the same. In the test
-file, we expect that the output from the target and proposal densities
-with the same shapes are correct and hence does not return any error
-messages (tested using `expect_silent()`), the acceptance rate of the
-proposal density with the same form as the target density is 1,
-indicating perfect match (tested using `expect_equal()`) and the
-expected value, when rounded to 1 decimal place, converges to the mean
-of the distribution (also tested using `expect_equal()`), and again, for
-target and proposal densities with the same shapes, the suggested
-minimum c equals to `NA`, indicating the proposal envelopes the target
-fully (tested using `expect_match()`, since `NA` is returned as a
-string).
 
-``` r
-# test-ar_summary.R
-
-test_that("Test of the input of the function ar_summary().", {
+test_that("Test of the values of c (feedback from peer review).", {
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
 
   # expect error
-  expect_error(ar_summary("A"), "Input must be an object of class \"ar\"")
-  expect_error(ar_summary(1), "Input must be an object of class \"ar\"")
-  expect_error(ar_summary(c(1,2,3)), "Input must be an object of class \"ar\"")
+  expect_error(ar(f_norm, q_norm, c=0), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=0.5), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=Inf), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=-Inf), "Invalid value of c; needs to be numeric and > 1.")
+})
+
+
+test_that("Test of the valid values of n.", {
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error
+  expect_error(ar(f_norm, q_norm, c=1, n=0), "n has to be an integer of minimum value of 1.")
+  expect_error(ar(f_norm, q_norm, c=1, n=0.5), "n has to be an integer of minimum value of 1.")
+
+  # expect silent
+  expect_silent(ar(f_norm, q_norm, c=1, n=1.5)) # decimal values converted to the nearest rounding
+})
+
+
+test_that("Test whether the proposal templates is valid or not valid",{
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+  q_norm_wrong <- "rnor(n,0,1)"
+
+  # expect silent (proposal is valid)
+  expect_silent(ar(f_norm, q_norm))
+
+  # expect error (proposal is wrong)
+  expect_error(ar(f_norm, q_norm_wrong), "Cannot find density function for rnor")
+})
+
+
+test_that("Test whether the target distribution is invalid (returns negative values or infinity).", {
+  ## initialise variables for testing
+  f_wrong <- "x+(x^2)"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error (proposal is wrong)
+  expect_error(ar(f_wrong, q_norm), "Target density generated infinite or negative values. Check your expression and parameters.")
 })
 ```
 
-The next test file, `test-ar_summary.R`, tested the input passed to the
-function `ar_summary()`. Since it can only accept an object of class
-`ar` as input, passing object of different class will results in an
-error message `Input must be an object of class "ar"`. The test was
-conducted using different type of input, i.e. a string `"A"`, a numeric
-`1`, and a list `c(1,2,3)`.
+If all the test files run successfully, the console will return `52`
+passed test items in total, with `3` items from `test-ar_conv.R` file,
+`5` items from `test-ar_plot.R` file, `7` items from `test-ar_print.R`
+file, `7` items from `test-ar_summary.R` file, and the remaining 30
+items from `test-ar.R` file.
 
-If both test files run successfully, the console will return `23` passed
-test items in total, with `20` tested items come from `test-ar.R` file
-and the remaining 3 items from `test-ar_summary.R` file.
+The content tested by the test file can also be carried out by the user
+using the instruction on the step **Test plan: user input**.
 
-The content tested by the test file can be done by the user using the
-instruction below.
+### Modified test plan based on feedback from peer review
+
+The feedback from peer review indicates that the value of *c*, when
+entered, is not checked. As a result, user can enter *c* values as
+$\le 1$ or Inf without getting any error messages. This problem has
+since been addressed and the test is included in the file `test-ar.R`,
+in this following lines:
+
+``` r
+# test-ar.R
+
+test_that("Test of the values of c (feedback from peer review).", {
+  ## initialise variables for testing
+  f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+  q_norm <- "rnorm(n, 0, 1)"
+
+  # expect error
+  expect_error(ar(f_norm, q_norm, c=0), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=0.5), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=Inf), "Invalid value of c; needs to be numeric and > 1.")
+  expect_error(ar(f_norm, q_norm, c=-Inf), "Invalid value of c; needs to be numeric and > 1.")
+})
+```
 
 ## Test plan: user input
 
@@ -327,9 +609,9 @@ and variance are rather nonsense, as we only run the sampler for a few
 iterations. To be able to provide a rather accurate results, we need to
 run the sampler long enough. An iteration of minimum of `n=1000` should
 provide suffice (this is also the default value for `n`), although for
-some densities it needs to be run long enough (more about that later).
-In this test plan, we will try several scenarios of combination pair of
-target-proposal densities.
+more mismatched target and proposal densities, it needs to be run long
+enough to obtain valid samples. In this test plan, we will try several
+scenarios of combination pair of target-proposal densities.
 
 ### Test 1: Proposal densities with Acceptance rate: 1, Suggested minimum c: NA, and Empirical expected value of target distribution $\approx$ its mean
 
@@ -350,9 +632,10 @@ example_norm <- ar(f_norm, q_norm, c=1, n=1000)
 summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
+#>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0075 
-#>      Empirical variance of target distribution:  1.0054 
+#>      Empirical expected value of target distribution:  -0.0409 
+#>      Empirical variance of target distribution:  0.9759 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -366,9 +649,10 @@ example_unif <- ar(f_unif, q_unif, c=1, n=1000)
 summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
+#>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.4979 
-#>      Empirical variance of target distribution:  0.0805 
+#>      Empirical expected value of target distribution:  0.5056 
+#>      Empirical variance of target distribution:  0.0834 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -382,9 +666,10 @@ example_gamma <- ar(f_gamma, q_gamma, c=1, n=1000)
 summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
+#>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.5577 
-#>      Empirical variance of target distribution:  0.8772 
+#>      Empirical expected value of target distribution:  1.4778 
+#>      Empirical variance of target distribution:  0.678 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -398,9 +683,10 @@ example_beta <- ar(f_beta, q_beta, c=1, n=1000)
 summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
+#>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.5967 
-#>      Empirical variance of target distribution:  0.0395 
+#>      Empirical expected value of target distribution:  0.6017 
+#>      Empirical variance of target distribution:  0.0402 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -414,16 +700,16 @@ example_exp <- ar(f_exp, q_exp, c=1, n=1000)
 summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
+#>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3181 
-#>      Empirical variance of target distribution:  0.0901 
+#>      Empirical expected value of target distribution:  0.3456 
+#>      Empirical variance of target distribution:  0.1225 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
 
 Notice that for the above examples, we do not use the command `print()`,
-as we do not want to clutter this section. Another S3 method, `head()`,
-will be implemented in a later version to accommodate this shortcoming.
+as we do not want to clutter this section.
 
 If the examples run correctly, you will notice that each printed summary
 gives `Acceptance rate: 1`, `Suggested minimum c: NA`, and
@@ -475,9 +761,10 @@ example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergen
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.5127 
-#>      Empirical expected value of target distribution:  0.01 
-#>      Empirical variance of target distribution:  1.5611 
+#>      Number of iterations:  10000 
+#>      Acceptance rate:  0.5027 
+#>      Empirical expected value of target distribution:  0.0034 
+#>      Empirical variance of target distribution:  1.5895 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -497,9 +784,10 @@ example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c 
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
-#>      Acceptance rate:  0.312 
-#>      Empirical expected value of target distribution:  -0.0062 
-#>      Empirical variance of target distribution:  0.9647 
+#>      Number of iterations:  10000 
+#>      Acceptance rate:  0.3105 
+#>      Empirical expected value of target distribution:  -0.0061 
+#>      Empirical variance of target distribution:  1.0237 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -514,17 +802,20 @@ part, such as Gamma and Uniform, or using more complicated target
 distribution, such as Kumaraswamy distribution (pdf:
 $abx^{a-1}(1-x^a)^{b-1}$) which has a support of $x \in (0,1)$ using
 $U(0,1)$ as the proposal distribution (make sure to convert $a$ and $b$
-into numerics in the argument).
+into their corresponding numeric values in the argument).
 
-### Test 3: Input to `ar_summary()` function
+### Test 3: Input to `ar_summary()`, `ar_conv()`, `ar_plot()`, and `ar_print()` function
 
 The next part of the test is about the input to the function
-`ar_summary()`. As mentioned before, the input needs to be an object of
-class `ar` which is the output from the function `ar()`. Any other input
-to this function will result in an error message
-`Input must be an object of class "ar"`. The user can test this function
-with several inputs, such as string characters, numerical, list, etc. as
-the example below:
+`ar_summary()`, `ar_conv()`, `ar_plot()`, and `ar_print()`. As mentioned
+before, the input needs to be an object of class `ar` or `ar_conv`,
+which is the output from the function `ar()` and `ar_conv()`,
+respectively. Any other input to this function will result in an error
+message `Input must be an object of class "ar"` (for `ar_conv()`) or
+`Input must be an object of class "ar" or "ar_conv"` (for
+`ar_summary()`, `ar_plot()`, and `ar_print()`) . The user can test this
+function with several inputs, such as string characters, numerical,
+list, etc. as the example below:
 
 ``` r
 ar_summary("A")
