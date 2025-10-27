@@ -275,7 +275,7 @@ test_that("Test of valid outputs of the function ar_summary().", {
 The last test file, `test-ar.R`, tests the main function, thus has the most test items. The first part of the tests is regarding the output from several input scenarios. Basically, if the target and proposal distribution are of the same shape written in different form (in pdf form for the target distribution and following the templates of the proposal distribution) then the result should be the same. In the test file, we expect that the output from the target and proposal densities with the same shapes are correct and hence does not return any error messages (tested using `expect_silent()`), the acceptance rate of the proposal density with the same form as the target density is 1, indicating perfect match (tested using `expect_equal()`) and the expected value, when rounded to 1 decimal place, converges to the mean of the distribution (also tested using `expect_equal()`), and again, for target and proposal densities with the same shapes, the suggested minimum c equals to `NA`, indicating the proposal envelopes the target fully (tested using `expect_match()`, since `NA` is returned as a string).
 
 
-The second part of the test file is regarding the peer review feedback, which is to check the value of *c* entered. The function will not accept value of *c* if it is $\le 1$ or Inf, therefore this part of the test checks whether the value of *c* is valid. The third part of the test file is regarding the value of *n*. *n* needs to be $\ge 1$ and if it is decimals (but still $\ge 1$) it will be rounded mathematically.
+The second part of the test file is regarding the peer review feedback, which is to check the value of `c` entered. The function will not accept value of `c` if it is $\le 1$ or Inf, therefore this part of the test checks whether the value of `c` is valid. The third part of the test file is regarding the value of `n`. `n` needs to be $\ge 1$ and if it is decimals (but still $\ge 1$) it will be rounded mathematically.
 
 
 The fourth and the final part of the tests check the output of the proposal and target distributions. Basically, if the proposal is not found in any templates, the function will return an error. If the target density input results in any negative or infinity values, it will also return an error message. Below is the full content of the test file.
@@ -397,7 +397,7 @@ The content tested by the test file can also be carried out by the user using th
 ### Modified test plan based on feedback from peer review
 
 
-The feedback from peer review indicates that the value of *c*, when entered, is not checked. As a result, user can enter *c* values as $\le 1$ or Inf without getting any error messages. This problem has since been addressed and the test is included in the file `test-ar.R`, in this following lines:
+The feedback from peer review indicates that the value of `c`, when entered, is not checked. As a result, user can enter `c` values as $\le 1$ or Inf without getting any error messages. This problem has since been addressed and the test is included in the file `test-ar.R`, in this following lines:
 
 ``` r
 # test-ar.R

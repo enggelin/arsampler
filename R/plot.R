@@ -16,14 +16,16 @@ plot.ar <- function(x, ...){
   df <- x$data
   params <- x$params
 
-  # plot f(x) and overlay proposal q(x)
-  ggplot2::ggplot(df, ggplot2::aes(x=df$x)) +
-    ggplot2::geom_line(ggplot2::aes(y = df$f, color="Target f(x)")) +
-    ggplot2::geom_line(ggplot2::aes(y = params$c * df$q, color="Proposal q(x) scaled by c")) +
-    ggplot2::scale_color_manual(name=NULL, values=c("Target f(x)" = "blue", "Proposal q(x) scaled by c" = "red")) +
-    ggplot2::labs(title="Target vs Proposal PDF", x="x", y="Density") +
-    ggplot2::theme_classic() +
-    ggplot2::theme(legend.position = "bottom")
+  suppressWarnings({
+    # plot f(x) and overlay proposal q(x)
+    ggplot2::ggplot(df, ggplot2::aes(x=df$x)) +
+      ggplot2::geom_line(ggplot2::aes(y = df$f, color="Target f(x)")) +
+      ggplot2::geom_line(ggplot2::aes(y = params$c * df$q, color="Proposal q(x) scaled by c")) +
+      ggplot2::scale_color_manual(name=NULL, values=c("Target f(x)" = "blue", "Proposal q(x) scaled by c" = "red")) +
+      ggplot2::labs(title="Target vs Proposal PDF", x="x", y="Density") +
+      ggplot2::theme_classic() +
+      ggplot2::theme(legend.position = "bottom")
+  })
 }
 
 
@@ -51,31 +53,39 @@ plot.ar_conv <- function(x, which=c(1,2,3,4), ...){
 
   plot_funs <- list(
     acceptance_rate = function(){
-      ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$acceptance_rate_cumulative)) +
-        ggplot2::geom_line(color="green") +
-        ggplot2::labs(title="Plot of acceptance rate", x="n", y="Acceptance rate") +
-        ggplot2::theme_classic()
+      suppressWarnings({
+        ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$acceptance_rate_cumulative)) +
+          ggplot2::geom_line(color="green") +
+          ggplot2::labs(title="Plot of acceptance rate", x="n", y="Acceptance rate") +
+          ggplot2::theme_classic()
+      })
     },
 
     y_values = function(){
-      ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$y)) +
-        ggplot2::geom_line(color="purple") +
-        ggplot2::labs(title="Trace plot of y", x="n", y="Accepted y values") +
-        ggplot2::theme_classic()
+      suppressWarnings({
+        ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$y)) +
+          ggplot2::geom_point(color="purple", size=1) +
+          ggplot2::labs(title="Scatterplot of y", x="n", y="Accepted y values") +
+          ggplot2::theme_classic()
+      })
     },
 
     mean = function(){
-      ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$mean_cumulative)) +
-        ggplot2::geom_line(color="brown") +
-        ggplot2::labs(title="Convergence plot of expected values", x="n", y="Expected values of y") +
-        ggplot2::theme_classic()
+      suppressWarnings({
+        ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$mean_cumulative)) +
+          ggplot2::geom_line(color="brown") +
+          ggplot2::labs(title="Convergence plot of expected values", x="n", y="Expected values of y") +
+          ggplot2::theme_classic()
+      })
     },
 
     variance = function(){
-      ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$var_cumulative)) +
-        ggplot2::geom_line(color="grey") +
-        ggplot2::labs(title="Convergence plot of variance", x="n", y="Variance of y") +
-        ggplot2::theme_classic()
+      suppressWarnings({
+        ggplot2::ggplot(df, ggplot2::aes(x=df$index, y=df$var_cumulative)) +
+          ggplot2::geom_line(color="grey") +
+          ggplot2::labs(title="Convergence plot of variance", x="n", y="Variance of y") +
+          ggplot2::theme_classic()
+      })
     }
   )
 

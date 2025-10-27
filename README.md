@@ -93,26 +93,26 @@ ar_print(example_norm_unif)
 #> 
 #> 
 #> $data
-#>    index          x           f     q          y          r          u
-#> 1      1  0.9957999 0.242987024 0.125  0.9957999 0.60746756 0.01760016
-#> 2      2  3.4514598 0.001033064 0.125         NA 0.00258266 0.36711522
-#> 3      3  2.7272060 0.009679308 0.125         NA 0.02419827 0.34499554
-#> 4      4  2.1678170 0.038057629 0.125         NA 0.09514407 0.31578285
-#> 5      5 -1.4372958 0.142011362 0.125         NA 0.35502840 0.52685070
-#> 6      6 -0.1039041 0.396794581 0.125 -0.1039041 0.99198645 0.64931493
-#> 7      7  0.8037927 0.288811844 0.125  0.8037927 0.72202961 0.27479228
-#> 8      8 -1.0265819 0.235540176 0.125         NA 0.58885044 0.72476675
-#> 9      9  2.4775815 0.018534089 0.125         NA 0.04633522 0.52195874
-#> 10    10  1.5491069 0.120175193 0.125  1.5491069 0.30043798 0.21321169
+#>    index           x           f     q           y          r           u
+#> 1      1  2.23016545 0.033181676 0.125          NA 0.08295419 0.649477553
+#> 2      2 -0.53463665 0.345813140 0.125 -0.53463665 0.86453285 0.441337788
+#> 3      3 -2.31113649 0.027608972 0.125 -2.31113649 0.06902243 0.004346638
+#> 4      4  2.98233924 0.004672261 0.125          NA 0.01168065 0.576691087
+#> 5      5  0.15781470 0.394005160 0.125  0.15781470 0.98501290 0.687093787
+#> 6      6 -2.51275382 0.016976854 0.125          NA 0.04244213 0.440774988
+#> 7      7  1.97478656 0.056765331 0.125  1.97478656 0.14191333 0.115812211
+#> 8      8 -2.85929873 0.006692732 0.125          NA 0.01673183 0.536986188
+#> 9      9 -0.06950995 0.397979672 0.125 -0.06950995 0.99494918 0.132610541
+#> 10    10 -0.07057297 0.397950042 0.125 -0.07057297 0.99487510 0.852391060
 #> 
 #> $acceptance_rate
-#> [1] 0.4
+#> [1] 0.6
 #> 
 #> $expected_values_f
-#> [1] 0.8111989
+#> [1] -0.1422091
 #> 
 #> $variance_f
-#> [1] 0.472018
+#> [1] 1.888069
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -124,9 +124,9 @@ ar_summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10 
-#>      Acceptance rate:  0.4 
-#>      Empirical expected value of target distribution:  0.8112 
-#>      Empirical variance of target distribution:  0.472 
+#>      Acceptance rate:  0.6 
+#>      Empirical expected value of target distribution:  -0.1422 
+#>      Empirical variance of target distribution:  1.8881 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -163,26 +163,26 @@ print(example_norm_unif)
 #> 
 #> 
 #> $data
-#>    index          x           f     q          y          r          u
-#> 1      1  0.9957999 0.242987024 0.125  0.9957999 0.60746756 0.01760016
-#> 2      2  3.4514598 0.001033064 0.125         NA 0.00258266 0.36711522
-#> 3      3  2.7272060 0.009679308 0.125         NA 0.02419827 0.34499554
-#> 4      4  2.1678170 0.038057629 0.125         NA 0.09514407 0.31578285
-#> 5      5 -1.4372958 0.142011362 0.125         NA 0.35502840 0.52685070
-#> 6      6 -0.1039041 0.396794581 0.125 -0.1039041 0.99198645 0.64931493
-#> 7      7  0.8037927 0.288811844 0.125  0.8037927 0.72202961 0.27479228
-#> 8      8 -1.0265819 0.235540176 0.125         NA 0.58885044 0.72476675
-#> 9      9  2.4775815 0.018534089 0.125         NA 0.04633522 0.52195874
-#> 10    10  1.5491069 0.120175193 0.125  1.5491069 0.30043798 0.21321169
+#>    index           x           f     q           y          r           u
+#> 1      1  2.23016545 0.033181676 0.125          NA 0.08295419 0.649477553
+#> 2      2 -0.53463665 0.345813140 0.125 -0.53463665 0.86453285 0.441337788
+#> 3      3 -2.31113649 0.027608972 0.125 -2.31113649 0.06902243 0.004346638
+#> 4      4  2.98233924 0.004672261 0.125          NA 0.01168065 0.576691087
+#> 5      5  0.15781470 0.394005160 0.125  0.15781470 0.98501290 0.687093787
+#> 6      6 -2.51275382 0.016976854 0.125          NA 0.04244213 0.440774988
+#> 7      7  1.97478656 0.056765331 0.125  1.97478656 0.14191333 0.115812211
+#> 8      8 -2.85929873 0.006692732 0.125          NA 0.01673183 0.536986188
+#> 9      9 -0.06950995 0.397979672 0.125 -0.06950995 0.99494918 0.132610541
+#> 10    10 -0.07057297 0.397950042 0.125 -0.07057297 0.99487510 0.852391060
 #> 
 #> $acceptance_rate
-#> [1] 0.4
+#> [1] 0.6
 #> 
 #> $expected_values_f
-#> [1] 0.8111989
+#> [1] -0.1422091
 #> 
 #> $variance_f
-#> [1] 0.472018
+#> [1] 1.888069
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -194,9 +194,9 @@ summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10 
-#>      Acceptance rate:  0.4 
-#>      Empirical expected value of target distribution:  0.8112 
-#>      Empirical variance of target distribution:  0.472 
+#>      Acceptance rate:  0.6 
+#>      Empirical expected value of target distribution:  -0.1422 
+#>      Empirical variance of target distribution:  1.8881 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -225,17 +225,17 @@ ar_print(example_norm_unif_conv)
 #> Convergence data of  example_norm_unif_conv :
 #> 
 #> $data
-#>    index acceptance_rate_cumulative          y mean_cumulative var_cumulative
-#> 1      1                  1.0000000  0.9957999       0.9957999      0.9957999
-#> 2      2                  0.5000000         NA       0.9957999      0.9957999
-#> 3      3                  0.3333333         NA       0.9957999      0.9957999
-#> 4      4                  0.2500000         NA       0.9957999      0.9957999
-#> 5      5                  0.2000000         NA       0.9957999      0.9957999
-#> 6      6                  0.3333333 -0.1039041       0.4459479      0.6046744
-#> 7      7                  0.4285714  0.8037927       0.5652295      0.3450215
-#> 8      8                  0.3750000         NA       0.5652295      0.3450215
-#> 9      9                  0.3333333         NA       0.5652295      0.3450215
-#> 10    10                  0.4000000  1.5491069       0.8111989      0.4720180
+#>    index acceptance_rate_cumulative           y mean_cumulative var_cumulative
+#> 1      1                  0.0000000          NA       0.0000000       0.000000
+#> 2      2                  0.5000000 -0.53463665      -0.5346367       0.000000
+#> 3      3                  0.6666667 -2.31113649      -1.4228866       1.577976
+#> 4      4                  0.5000000          NA      -1.4228866       1.577976
+#> 5      5                  0.6000000  0.15781470      -0.8959861       1.621860
+#> 6      6                  0.5000000          NA      -0.8959861       1.621860
+#> 7      7                  0.5714286  1.97478656      -0.1782930       3.141574
+#> 8      8                  0.5000000          NA      -0.1782930       3.141574
+#> 9      9                  0.5555556 -0.06950995      -0.1565364       2.358547
+#> 10    10                  0.6000000 -0.07057297      -0.1422091       1.888069
 ```
 
 ``` r
@@ -243,9 +243,9 @@ ar_print(example_norm_unif_conv)
 ar_summary(example_norm_unif_conv)
 #> Convergence summary of  example_norm_unif_conv :
 #> ----------------------
-#>      Acceptance rate:  0.4 
-#>      Empirical expected value of target distribution:  0.8112 
-#>      Empirical variance of target distribution:  0.472 
+#>      Acceptance rate:  0.6 
+#>      Empirical expected value of target distribution:  -0.1422 
+#>      Empirical variance of target distribution:  1.8881 
 #> ----------------------
 ```
 
@@ -448,10 +448,10 @@ fully (tested using `expect_match()`, since `NA` is returned as a
 string).
 
 The second part of the test file is regarding the peer review feedback,
-which is to check the value of *c* entered. The function will not accept
-value of *c* if it is $\le 1$ or Inf, therefore this part of the test
-checks whether the value of *c* is valid. The third part of the test
-file is regarding the value of *n*. *n* needs to be $\ge 1$ and if it is
+which is to check the value of `c` entered. The function will not accept
+value of `c` if it is $\le 1$ or Inf, therefore this part of the test
+checks whether the value of `c` is valid. The third part of the test
+file is regarding the value of `n`. `n` needs to be $\ge 1$ and if it is
 decimals (but still $\ge 1$) it will be rounded mathematically.
 
 The fourth and the final part of the tests check the output of the
@@ -578,8 +578,8 @@ using the instruction on the step **Test plan: user input**.
 
 ### Modified test plan based on feedback from peer review
 
-The feedback from peer review indicates that the value of *c*, when
-entered, is not checked. As a result, user can enter *c* values as
+The feedback from peer review indicates that the value of `c`, when
+entered, is not checked. As a result, user can enter `c` values as
 $\le 1$ or Inf without getting any error messages. This problem has
 since been addressed and the test is included in the file `test-ar.R`,
 in this following lines:
@@ -634,8 +634,8 @@ summary(example_norm)
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  -0.0409 
-#>      Empirical variance of target distribution:  0.9759 
+#>      Empirical expected value of target distribution:  0.0393 
+#>      Empirical variance of target distribution:  1.0593 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -651,8 +651,8 @@ summary(example_unif)
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.5056 
-#>      Empirical variance of target distribution:  0.0834 
+#>      Empirical expected value of target distribution:  0.5038 
+#>      Empirical variance of target distribution:  0.0777 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -668,8 +668,8 @@ summary(example_gamma)
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.4778 
-#>      Empirical variance of target distribution:  0.678 
+#>      Empirical expected value of target distribution:  1.5283 
+#>      Empirical variance of target distribution:  0.7964 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -685,7 +685,7 @@ summary(example_beta)
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.6017 
+#>      Empirical expected value of target distribution:  0.6013 
 #>      Empirical variance of target distribution:  0.0402 
 #>      Suggested minimum c:  NA 
 #> ----------------------
@@ -702,8 +702,8 @@ summary(example_exp)
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3456 
-#>      Empirical variance of target distribution:  0.1225 
+#>      Empirical expected value of target distribution:  0.3495 
+#>      Empirical variance of target distribution:  0.1234 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -762,9 +762,9 @@ summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10000 
-#>      Acceptance rate:  0.5027 
-#>      Empirical expected value of target distribution:  0.0034 
-#>      Empirical variance of target distribution:  1.5895 
+#>      Acceptance rate:  0.5095 
+#>      Empirical expected value of target distribution:  -0.0143 
+#>      Empirical variance of target distribution:  1.5599 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -785,9 +785,9 @@ summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10000 
-#>      Acceptance rate:  0.3105 
-#>      Empirical expected value of target distribution:  -0.0061 
-#>      Empirical variance of target distribution:  1.0237 
+#>      Acceptance rate:  0.3168 
+#>      Empirical expected value of target distribution:  0.0074 
+#>      Empirical variance of target distribution:  1.0092 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
