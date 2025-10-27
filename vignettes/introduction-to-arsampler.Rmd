@@ -28,25 +28,23 @@ Rejection sampling works by repeatedly simulating random variables from a wrong 
 
 Several considerations of a good proposal density are: easy to sample from; compatible supports with the target density; a constant c that is equal to or larger than the ratio of the target and proposal distributions; and close in form to the target distribution. Although less efficient than importance sampling method, rejection sampling provides a simpler alternative given the choice of proposal distribution is a good match for the target and the choice of the constant c envelopes the target distribution effectively.
 
-Package `arsampler` provides a hassle-free way to implement the acceptance-rejection sampling. Given the nature of this package, however, the user needs to have a certain knowledge about statistics, especially about Monte Carlo integration and random number properties. Therefore, the intended main users for this package are researchers or students who want to experiment and test several distributions they have in hand and see how they match, without the need to code everything from scratch. All the user really needs to know beforehand are the pdf form of the target distribution and the parameters of their proposal distribution, and the package will take care of the rest. There are several limitations of this package in its current version (Version 0.1.0), however, which will be explained in the next section.
+Package `arsampler` provides a hassle-free way to implement the acceptance-rejection sampling. Given the nature of this package, however, the user needs to have a certain knowledge about statistics, especially about Monte Carlo integration and random number properties. Therefore, the intended main users for this package are researchers or students who want to experiment and test several distributions they have in hand and see how they match, without the need to code everything from scratch. All the user really needs to know beforehand are the pdf form of the target distribution and the parameters of their proposal distribution, and the package will take care of the rest. There are several limitations of this package in its current version (Version 1.0.0), however, which will be explained in the next section.
 
 
 ## Limitations
 
-Considering the package is developed on a shorter time commitment (3 months more or less), it can not include a lot of things that may potentially make this package robust and powerful. Some of the limitations of this package in the current stage are:
+Considering the short time commitment to build this package, it still has some limitations and shortcomings. Some of the limitations of this package in the current stage are:
 
   * The package only accomodates continuous distribution, denoted by a *pdf* (probability density function) rather than *pmf* (probability mass function) of a discrete distribution. This ensures that the sampling is done in a correct way; as *pmf* gives a step function when plotted, it does not make sense to draw samples from that. An area function of a *pdf*, however, makes it easier to draw samples from both the target and proposal densities. Therefore, the templates for the proposal distributions, in the current version, are limited to: *normal*, *uniform*, *beta*, *gamma*, and *exponential*. This list may potentially be expanded in later versions. The usages of this proposal distributions are explained in the section **Usage**.
   
   * The input for the target or proposal distribution can not contain any kind of parameters except the constants or functions known to R. For example, for a standard normal distribution ($X \sim N(0,1)$), rather than defining the string for the target distribution as `"(1/sqrt(2*pi*sigma^2))*exp((-(x-mu)^2)/(2*sigma^2))"`, it has to be declared as `"(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"`. That is, any kind of parameters has to be converted into its numerical form first. Notice that we left off the constant `pi` as it is, because it is a constant known to R. Other built-in constants or functions in R are: `besselI()` (and its other variations, `besselJ()`, `besselY()`, `besselK()`), `gamma()` (and its families), `beta()`, `choose()` (and other variations of combinatorics), and `sinh` (and its other variations of hyperbolic). Meanwhile, for the proposal distribution, since it is taken from templates, it needs to be written as (let's say, it is a standard normal distribution again) `"rnorm(n, 0, 1)"`. Notice that we also left the `n` since it will be declared in the list of arguments.
-  
-It is possible that, given enough time, several improvement will be made for this package to overcome those limitations and potentially make this package more robust for everyday use.
 
 
 ## Usage
 
 ### Functions
 
-The usage of the functions in this package is relatively straightforward. There are 3 functions currently available in this version: `ar()` (the main function), `ar_summary()`, and `ar_plot()`. The explanation for each functions are described below.
+The usage of the functions in this package is relatively straightforward. There are 5 functions currently available in this version: `ar()` (the main function), `ar_print()`, `ar_summary()`, `ar_plot()`, and `ar_conv()`. The explanation for each functions are described below.
 
   * `ar()` accepts, at max, 4 arguments, with 2 mandatory and 2 optional. The arguments are:
     *  `f`: the target density, defined as string. The example usage for a standard normal distribution is: `"(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"`. This is a mandatory argument.
@@ -56,9 +54,14 @@ The usage of the functions in this package is relatively straightforward. There 
 
     This function outputs an object of class `ar`, which then can be passed to other functions in this package defined below.
 
-  * `ar_summary()` accepts one mandatory argument, which is an object of class `ar`, the output from the function `ar()`. It returns an summary of the fitted densities, which will be explained in the next section **Interpreting the output**. The functionality of this command can also be implemented using the command `summary()`, which, using its S3 object-oriented method, enables it to be modified based on the object we pass through it. Both of these functions return the same summaries of the object `ar`.
+  * `ar_conv()` accepts one mandatory argument, which is an object of class `ar`. This function prepares the object `ar` for diagnostic plots. The output of this function is an object of class `ar_conv()`.
   
-  * `ar_plot()` accepts one mandatory argument, which is an object of the class `ar` as the previous function. This command returns an overlay for both the target and proposal densities plots in a single graph. In the current version, this function is still on the early stage of development and has not been tested, therefore the implementation of this function needs to be done in a careful way.
+  * `ar_print()` allows the user to print the raw values from object of class `ar` or `ar_conv`. User then can view the values obtained from running the sampler.
+  
+  * `ar_summary()` accepts one mandatory argument, which is an object of class `ar` or `ar_conv`, the output from the function `ar()` and `ar_conv()`, respectively. If the object is of class `ar`, it returns an summary of the sampler, which will be explained in the next section **Interpreting the output**. If the object is of class `ar_conv`, it also returns a similar summary of the sampler, with a few differences. The functionality of this command can also be implemented using the command `summary()`, which, using its S3 object-oriented method, enables it to be modified based on the object we pass through it. Both of these functions return the same summaries of the object `ar` or `ar_conv`.
+  
+  * `ar_plot()` accepts one mandatory argument, which is an object of the class `ar` or `ar_conv` as the previous function. If the object is of class `ar`, this command returns an overlay for both the target and proposal densities plots in a single graph; whereas for an object of class `ar_conv`, it returns four diagnostic plots: convergence of acceptance rate, scatterplot of accepted y values, convergence of expected values, and convergence of variance.
+
 
 ### Example
 
@@ -70,32 +73,33 @@ f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 q_unif <- "runif(n, -4,4)"
 
 # Run the main function ar()
+set.seed(0)
 example_norm_unif <- ar(f_norm, q_unif, c=1, n=10)
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-# Print the raw values of the fitted densities
+# Print the raw values of the sampler
 example_norm_unif
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-# Provide a summary of the fitted densities
+# Provide a summary of the sampler
 ar_summary(example_norm_unif)
 ```
 
-The output above can also be achieved by using the commands `print()` and `summary()`, which is an S3 object-oriented method in R. Those commands are overridden if the user passes an object of class `ar`, which is the object class of the output from the function `ar()`.
+The output above can also be achieved by using the commands `print()` and `summary()` respectively, which is an S3 object-oriented method in R. Those commands are overridden if the user passes an object of class `ar`, which is the object class of the output from the function `ar()`.
 
 ```{r, warning=FALSE, message=FALSE}
-# Print the raw values of the fitted densities using S3 method print()
+# Print the raw values of the sampler using S3 method print()
 print(example_norm_unif)
 ```
 
 ```{r, warning=FALSE, message=FALSE}
-# Provide a summary of the fitted densities using S3 method summary()
+# Provide a summary of the sampler using S3 method summary()
 summary(example_norm_unif)
 ```
 
-For convenience purpose, the examples above was only run for 10 iterations, therefore the output has to be interpreted in care, because a short iteration will not be enough to produce a trustworthy output.
+For convenience purpose, the examples above was only run for 10 iterations, therefore the output has to be interpreted in care, because a short iteration will not be enough to produce a valid output.
 
 ## Interpreting the output
 

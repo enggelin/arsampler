@@ -1,0 +1,81 @@
+---
+title: "Convergence in arsampler"
+author: "Enggelin Giacinta Wongkar"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Convergence in arsampler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(arsampler)
+```
+
+This part explains how to interpret the convergence plots produced by the package `arsampler`.
+
+To begin with, we will run the same example from the vignette "Introduction to arsampler", but this time we will run the sampler for 10000 iterations.
+
+```{r, warning=FALSE, message=FALSE}
+# Target density: Normal(0,1); Proposal density: Uniform(-4,4)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4,4)"
+
+# Run the main function ar()
+set.seed(0)
+example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000)
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Provide a summary of the sampler
+ar_summary(example_norm_unif)
+```
+
+```{r, warning=FALSE, message=FALSE}
+# Show the overlay plot
+ar_plot(example_norm_unif)
+```
+
+
+We can see from the plot that the proposal distribution has fully enveloped the target distribution, therefore out proposal is valid and we will proceed to the convergence plots. To show the convergence plots, we will use the function `ar_conv()` with the output from the function `ar()` as its input.
+
+```{r}
+# Create a convergence variable from the `ar` input
+example_norm_unif_conv <- ar_conv(example_norm_unif)
+```
+
+```{r}
+# Show the first convergence plot: acceptance rate
+ar_plot(example_norm_unif_conv, which=1)
+```
+
+The first convergence plot shows convergence for acceptance rate. Basically, in the long run, the acceptance rate will stabilises as roughly the ratio of the area where the proposal density overlaps the target density to the excess area of the proposal density. The acceptance rate will tell us how reliable the expected value and variance of the target distribution as approximated by the drawn values from the proposal. A proposal with very different shape than the target results in a lower acceptance rate than one with more similar shape. However, given we run the iteration long enough, the samples drawn from the proposal distribution with a very different shape will eventually give samples that is large enough to approximate the target's statistics; ensuring the constant `c` fully envelope the target distribution.
+
+```{r}
+# Show the second convergence plot: scatterplot of y values
+ar_plot(example_norm_unif_conv, which=2)
+```
+
+The second convergence plot shows the scatterplot of the y values. This is different from an MCMC diagnostic which shows a traceplot rather than a scatterplot. The reasons for this lies in the difference of acceptance condition between two method: in MCMC, if a proposal sample gets rejected, the previous value will be accepted as the current value, whereas in AR method a rejected proposal sample will be dropped. Therefore, the number of y values in AR method is not equal to the number of iterations, but rather the acceptance rate $\times$ number of iterations. Based on that, samples in AR method is independent and not a time series samples, which makes it ambiguous if presented as a traceplot.
+
+From this example, we can see that the accepted values are scattered throughout the support for a standard normal distribution (99% of the values is in the domain of -3,3) therefore the drawn samples are able to represent the target distribution. At this stage, we may proceed to the next plot.
+
+```{r}
+# Show the third convergence plot: expected values of target distribution
+ar_plot(example_norm_unif_conv, which=3)
+```
+
+The third convergence plot shows the convergence of expected values. This plot shows that over the iterations, the expected value converges to around 0, the mean of a standard normal distribution.
+
+```{r}
+# Show the fourth convergence plot: variance of target distribution
+ar_plot(example_norm_unif_conv, which=4)
+```
+
+The next plot shows the convergence of the variance. The theory is that the bigger the number of samples, the lower the variance. This plot, too, shows the variance converges to around 1, the variance of a standard normal distribution.
+
+All the convergence plots can be displayed at the same time by dropping the argument `which`.
