@@ -21,3 +21,11 @@ ar_conv(object)
 \description{
 Provide a convergence object for an object of class `ar`.
 }
+\examples{
+# pair of standard normal distribution (target) and uniform distribution (proposal)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4, 4)"
+example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+ar_conv(example_norm_unif)
+
+}

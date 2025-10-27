@@ -11,6 +11,14 @@
 #'   \item{var_cumulative}{Sample variance of accepted values, cumulative.}
 #' \describe{These components are used for the convergence plot using the function "ar_plot()" or "plot()."}
 #' }
+#'
+#' @examples
+#' # pair of standard normal distribution (target) and uniform distribution (proposal)
+#' f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+#' q_unif <- "runif(n, -4, 4)"
+#' example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+#' ar_conv(example_norm_unif)
+#'
 #' @export
 
 ar_conv <- function(object) {

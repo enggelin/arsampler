@@ -17,11 +17,11 @@
 #' }
 #'
 #' @examples
-#' # pair of standard normal distributions
+#' # pair of standard normal distribution (target) and uniform distribution (proposal)
 #' f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
-#' q_norm <- "rnorm(n, 0, 1)"
-#' example_norm <- ar(f_norm, q_norm, c=1, n=1000)
-#' example_norm$data
+#' q_unif <- "runif(n, -4, 4)"
+#' example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+#' example_norm_unif$data
 #'
 #' @seealso [stats::rnorm()]
 #' @export

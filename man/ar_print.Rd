@@ -15,3 +15,11 @@ ar_print(object)
 \description{
 Show the data for an object of class `ar` or `ar_conv`.
 }
+\examples{
+# pair of standard normal distribution (target) and uniform distribution (proposal)
+f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+q_unif <- "runif(n, -4, 4)"
+example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+ar_print(example_norm_unif)
+
+}

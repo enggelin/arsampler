@@ -4,6 +4,14 @@
 #'
 #' @param object an object of class `ar` or `ar_conv`.
 #' @return \code{ar_print} returns different results depending on the class of the input object. If the input object is `ar`, this function will return a list with the following components: `x`, `f`, `q`, `y`, `r`, and `u`, whereas if the input object is of class `ar_conv`, this function will return a list with the following components: `acceptance_rate_cumulative`, `y`, `mean_cumulative`, and `var_cumulative`.
+#'
+#' @examples
+#' # pair of standard normal distribution (target) and uniform distribution (proposal)
+#' f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
+#' q_unif <- "runif(n, -4, 4)"
+#' example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=1000)
+#' ar_print(example_norm_unif)
+#'
 #' @export
 
 ar_print <- function(object) {
