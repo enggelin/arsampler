@@ -70,6 +70,7 @@ f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 q_unif <- "runif(n, -4, 4)"
 
 # Run the main function ar()
+set.seed(0)
 example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10)
 ```
 
@@ -93,26 +94,26 @@ ar_print(example_norm_unif)
 #> 
 #> 
 #> $data
-#>    index           x           f     q           y          r           u
-#> 1      1  2.23016545 0.033181676 0.125          NA 0.08295419 0.649477553
-#> 2      2 -0.53463665 0.345813140 0.125 -0.53463665 0.86453285 0.441337788
-#> 3      3 -2.31113649 0.027608972 0.125 -2.31113649 0.06902243 0.004346638
-#> 4      4  2.98233924 0.004672261 0.125          NA 0.01168065 0.576691087
-#> 5      5  0.15781470 0.394005160 0.125  0.15781470 0.98501290 0.687093787
-#> 6      6 -2.51275382 0.016976854 0.125          NA 0.04244213 0.440774988
-#> 7      7  1.97478656 0.056765331 0.125  1.97478656 0.14191333 0.115812211
-#> 8      8 -2.85929873 0.006692732 0.125          NA 0.01673183 0.536986188
-#> 9      9 -0.06950995 0.397979672 0.125 -0.06950995 0.99494918 0.132610541
-#> 10    10 -0.07057297 0.397950042 0.125 -0.07057297 0.99487510 0.852391060
+#>    index          x            f     q          y           r          u
+#> 1      1  3.1735776 0.0025935286 0.125         NA 0.006483822 0.06178627
+#> 2      2 -1.8759307 0.0686663151 0.125         NA 0.171665788 0.20597457
+#> 3      3 -1.0230088 0.2364042446 0.125 -1.0230088 0.591010611 0.17655675
+#> 4      4  0.5828269 0.3366262095 0.125  0.5828269 0.841565524 0.68702285
+#> 5      5  3.2656623 0.0019281125 0.125         NA 0.004820281 0.38410372
+#> 6      6 -2.3865446 0.0231274286 0.125         NA 0.057818571 0.76984142
+#> 7      7  3.1871175 0.0024842178 0.125         NA 0.006210544 0.49769924
+#> 8      8  3.5574021 0.0007126689 0.125         NA 0.001781672 0.71761851
+#> 9      9  1.2863823 0.1744131628 0.125         NA 0.436032907 0.99190609
+#> 10    10  1.0329124 0.2340097505 0.125  1.0329124 0.585024376 0.38003518
 #> 
 #> $acceptance_rate
-#> [1] 0.6
+#> [1] 0.3
 #> 
 #> $expected_values_f
-#> [1] -0.1422091
+#> [1] 0.1975768
 #> 
 #> $variance_f
-#> [1] 1.888069
+#> [1] 1.168016
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -124,9 +125,9 @@ ar_summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10 
-#>      Acceptance rate:  0.6 
-#>      Empirical expected value of target distribution:  -0.1422 
-#>      Empirical variance of target distribution:  1.8881 
+#>      Acceptance rate:  0.3 
+#>      Empirical expected value of target distribution:  0.1976 
+#>      Empirical variance of target distribution:  1.168 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -163,26 +164,26 @@ print(example_norm_unif)
 #> 
 #> 
 #> $data
-#>    index           x           f     q           y          r           u
-#> 1      1  2.23016545 0.033181676 0.125          NA 0.08295419 0.649477553
-#> 2      2 -0.53463665 0.345813140 0.125 -0.53463665 0.86453285 0.441337788
-#> 3      3 -2.31113649 0.027608972 0.125 -2.31113649 0.06902243 0.004346638
-#> 4      4  2.98233924 0.004672261 0.125          NA 0.01168065 0.576691087
-#> 5      5  0.15781470 0.394005160 0.125  0.15781470 0.98501290 0.687093787
-#> 6      6 -2.51275382 0.016976854 0.125          NA 0.04244213 0.440774988
-#> 7      7  1.97478656 0.056765331 0.125  1.97478656 0.14191333 0.115812211
-#> 8      8 -2.85929873 0.006692732 0.125          NA 0.01673183 0.536986188
-#> 9      9 -0.06950995 0.397979672 0.125 -0.06950995 0.99494918 0.132610541
-#> 10    10 -0.07057297 0.397950042 0.125 -0.07057297 0.99487510 0.852391060
+#>    index          x            f     q          y           r          u
+#> 1      1  3.1735776 0.0025935286 0.125         NA 0.006483822 0.06178627
+#> 2      2 -1.8759307 0.0686663151 0.125         NA 0.171665788 0.20597457
+#> 3      3 -1.0230088 0.2364042446 0.125 -1.0230088 0.591010611 0.17655675
+#> 4      4  0.5828269 0.3366262095 0.125  0.5828269 0.841565524 0.68702285
+#> 5      5  3.2656623 0.0019281125 0.125         NA 0.004820281 0.38410372
+#> 6      6 -2.3865446 0.0231274286 0.125         NA 0.057818571 0.76984142
+#> 7      7  3.1871175 0.0024842178 0.125         NA 0.006210544 0.49769924
+#> 8      8  3.5574021 0.0007126689 0.125         NA 0.001781672 0.71761851
+#> 9      9  1.2863823 0.1744131628 0.125         NA 0.436032907 0.99190609
+#> 10    10  1.0329124 0.2340097505 0.125  1.0329124 0.585024376 0.38003518
 #> 
 #> $acceptance_rate
-#> [1] 0.6
+#> [1] 0.3
 #> 
 #> $expected_values_f
-#> [1] -0.1422091
+#> [1] 0.1975768
 #> 
 #> $variance_f
-#> [1] 1.888069
+#> [1] 1.168016
 #> 
 #> $suggested_c
 #> [1] "NA"
@@ -194,9 +195,9 @@ summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10 
-#>      Acceptance rate:  0.6 
-#>      Empirical expected value of target distribution:  -0.1422 
-#>      Empirical variance of target distribution:  1.8881 
+#>      Acceptance rate:  0.3 
+#>      Empirical expected value of target distribution:  0.1976 
+#>      Empirical variance of target distribution:  1.168 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -225,17 +226,17 @@ ar_print(example_norm_unif_conv)
 #> Convergence data of  example_norm_unif_conv :
 #> 
 #> $data
-#>    index acceptance_rate_cumulative           y mean_cumulative var_cumulative
-#> 1      1                  0.0000000          NA       0.0000000       0.000000
-#> 2      2                  0.5000000 -0.53463665      -0.5346367       0.000000
-#> 3      3                  0.6666667 -2.31113649      -1.4228866       1.577976
-#> 4      4                  0.5000000          NA      -1.4228866       1.577976
-#> 5      5                  0.6000000  0.15781470      -0.8959861       1.621860
-#> 6      6                  0.5000000          NA      -0.8959861       1.621860
-#> 7      7                  0.5714286  1.97478656      -0.1782930       3.141574
-#> 8      8                  0.5000000          NA      -0.1782930       3.141574
-#> 9      9                  0.5555556 -0.06950995      -0.1565364       2.358547
-#> 10    10                  0.6000000 -0.07057297      -0.1422091       1.888069
+#>    index acceptance_rate_cumulative          y mean_cumulative var_cumulative
+#> 1      1                  0.0000000         NA       0.0000000       0.000000
+#> 2      2                  0.0000000         NA       0.0000000       0.000000
+#> 3      3                  0.3333333 -1.0230088      -1.0230088       0.000000
+#> 4      4                  0.5000000  0.5828269      -0.2200909       1.289354
+#> 5      5                  0.4000000         NA      -0.2200909       1.289354
+#> 6      6                  0.3333333         NA      -0.2200909       1.289354
+#> 7      7                  0.2857143         NA      -0.2200909       1.289354
+#> 8      8                  0.2500000         NA      -0.2200909       1.289354
+#> 9      9                  0.2222222         NA      -0.2200909       1.289354
+#> 10    10                  0.3000000  1.0329124       0.1975768       1.168016
 ```
 
 ``` r
@@ -243,9 +244,9 @@ ar_print(example_norm_unif_conv)
 ar_summary(example_norm_unif_conv)
 #> Convergence summary of  example_norm_unif_conv :
 #> ----------------------
-#>      Acceptance rate:  0.6 
-#>      Empirical expected value of target distribution:  -0.1422 
-#>      Empirical variance of target distribution:  1.8881 
+#>      Acceptance rate:  0.3 
+#>      Empirical expected value of target distribution:  0.1976 
+#>      Empirical variance of target distribution:  1.168 
 #> ----------------------
 ```
 
@@ -628,14 +629,15 @@ the vignette):
 f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 q_norm <- "rnorm(n, 0, 1)"
 
+set.seed(0)
 example_norm <- ar(f_norm, q_norm, c=1, n=1000)
 summary(example_norm)
 #> Summary of  example_norm :
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.0393 
-#>      Empirical variance of target distribution:  1.0593 
+#>      Empirical expected value of target distribution:  -0.0158 
+#>      Empirical variance of target distribution:  0.996 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -645,14 +647,15 @@ summary(example_norm)
 f_unif <- "1"
 q_unif <- "runif(n, 0, 1)"
 
+set.seed(0)
 example_unif <- ar(f_unif, q_unif, c=1, n=1000)
 summary(example_unif)
 #> Summary of  example_unif :
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.5038 
-#>      Empirical variance of target distribution:  0.0777 
+#>      Empirical expected value of target distribution:  0.5006 
+#>      Empirical variance of target distribution:  0.0833 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -662,14 +665,15 @@ summary(example_unif)
 f_gamma <- "((2^3)/(gamma(3)))*x^(3-1)*exp(-2*x)"
 q_gamma <- "rgamma(n, 3, 2)"
 
+set.seed(0)
 example_gamma <- ar(f_gamma, q_gamma, c=1, n=1000)
 summary(example_gamma)
 #> Summary of  example_gamma :
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  1.5283 
-#>      Empirical variance of target distribution:  0.7964 
+#>      Empirical expected value of target distribution:  1.496 
+#>      Empirical variance of target distribution:  0.7919 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -679,14 +683,15 @@ summary(example_gamma)
 f_beta <- "((gamma(3+2))/gamma(3)*gamma(2))*x^(3-1)*(1-x)^(2-1)"
 q_beta <- "rbeta(n, 3, 2)"
 
+set.seed(0)
 example_beta <- ar(f_beta, q_beta, c=1, n=1000)
 summary(example_beta)
 #> Summary of  example_beta :
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.6013 
-#>      Empirical variance of target distribution:  0.0402 
+#>      Empirical expected value of target distribution:  0.6122 
+#>      Empirical variance of target distribution:  0.0394 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -696,14 +701,15 @@ summary(example_beta)
 f_exp <- "3*exp(-3*x)"
 q_exp <- "rexp(n, 3)"
 
+set.seed(0)
 example_exp <- ar(f_exp, q_exp, c=1, n=1000)
 summary(example_exp)
 #> Summary of  example_exp :
 #> ----------------------
 #>      Number of iterations:  1000 
 #>      Acceptance rate:  1 
-#>      Empirical expected value of target distribution:  0.3495 
-#>      Empirical variance of target distribution:  0.1234 
+#>      Empirical expected value of target distribution:  0.3432 
+#>      Empirical variance of target distribution:  0.1085 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
@@ -757,14 +763,15 @@ densities, as instructed below:
 f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 q_unif <- "runif(n, -4, 4)" # to accommodate the lower and upper limit of N(0,1) distribution
 
+set.seed(0)
 example_norm_unif <- ar(f_norm, q_unif, c=1, n=10000) # run longer for convergence
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10000 
-#>      Acceptance rate:  0.5095 
-#>      Empirical expected value of target distribution:  -0.0143 
-#>      Empirical variance of target distribution:  1.5599 
+#>      Acceptance rate:  0.502 
+#>      Empirical expected value of target distribution:  -0.0246 
+#>      Empirical variance of target distribution:  1.5743 
 #>      Suggested minimum c:  3.1915 
 #> ----------------------
 ```
@@ -780,14 +787,15 @@ example code:
 f_norm <- "(1/sqrt(2*pi*1^2))*exp((-(x-0)^2)/(2*1^2))"
 q_unif <- "runif(n, -4, 4)" # to accommodate the lower and upper limit of N(0,1) distribution
 
+set.seed(0)
 example_norm_unif <- ar(f_norm, q_unif, c=3.2, n=10000) # change the value of c to the suggested minimum.
 summary(example_norm_unif)
 #> Summary of  example_norm_unif :
 #> ----------------------
 #>      Number of iterations:  10000 
-#>      Acceptance rate:  0.3168 
-#>      Empirical expected value of target distribution:  0.0074 
-#>      Empirical variance of target distribution:  1.0092 
+#>      Acceptance rate:  0.3087 
+#>      Empirical expected value of target distribution:  -0.0163 
+#>      Empirical variance of target distribution:  1.0119 
 #>      Suggested minimum c:  NA 
 #> ----------------------
 ```
